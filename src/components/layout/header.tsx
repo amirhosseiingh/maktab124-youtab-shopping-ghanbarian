@@ -18,6 +18,7 @@ import {
   ChartPieIcon,
   CursorArrowRaysIcon,
   FingerPrintIcon,
+  ScissorsIcon,
   SquaresPlusIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline';
@@ -30,39 +31,29 @@ import {
 
 const products = [
   {
-    name: 'Analytics',
-    description: 'Get a better understanding of your traffic',
+    name: 'آرایشی',
+    description: 'ابزارهای آرایشی برای درخشش چهره',
     href: '#',
     icon: ChartPieIcon,
   },
   {
-    name: 'Engagement',
-    description: 'Speak directly to your customers',
-    href: '#',
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: 'Security',
-    description: 'Your customers’ data will be safe and secure',
+    name: 'بهداشتی',
+    description: 'محصولات ضروری برای سلامت روزانه',
     href: '#',
     icon: FingerPrintIcon,
   },
   {
-    name: 'Integrations',
-    description: 'Connect with third-party tools',
+    name: 'مو',
+    description: 'مراقبت و زیبایی مو با بهترین محصولات',
     href: '#',
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: 'Automations',
-    description: 'Build strategic funnels that will convert',
-    href: '#',
-    icon: ArrowPathIcon,
+    icon: ScissorsIcon,
   },
 ];
+
+
 const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
+  { name: 'تخفیف‌های ویژه را از دست ندهید!', href: '#', icon: PlayCircleIcon },
+  { name: 'واحد فروش', href: '#', icon: PhoneIcon },
 ];
 
 import youtabLogo from '../../assets/images/youtab logo.png'
@@ -99,7 +90,7 @@ export default function Header() {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900">
+            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm">
               دسته بندی محصولات
               <ChevronDownIcon
                 aria-hidden="true"
@@ -115,18 +106,18 @@ export default function Header() {
                 {products.map(item => (
                   <div
                     key={item.name}
-                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-gray-50"
+                    className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm/6 hover:bg-green-100"
                   >
                     <div className="flex size-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                       <item.icon
                         aria-hidden="true"
-                        className="size-6 text-gray-600 group-hover:text-indigo-600"
+                        className="size-6 text-gray-600 group-hover:text-green-800"
                       />
                     </div>
                     <div className="flex-auto">
                       <a
                         href={item.href}
-                        className="block font-semibold text-gray-900"
+                        className="block font-semibold text-gray-900 "
                       >
                         {item.name}
                         <span className="absolute inset-0" />
@@ -136,7 +127,7 @@ export default function Header() {
                   </div>
                 ))}
               </div>
-              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50">
+              <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-green-100">
                 {callsToAction.map(item => (
                   <a
                     key={item.name}
@@ -154,28 +145,38 @@ export default function Header() {
             </PopoverPanel>
           </Popover>
 
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          <a
+            href="#"
+            className="text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm"
+          >
             برند ها
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          <a
+            href="#"
+            className="text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm "
+          >
             مشاوره رایگان
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+          <a
+            href="#"
+            className="text-sm/6 font-semibold text-gray-900 hover:bg-green-100 p-2 rounded-sm"
+          >
             درباره ما
           </a>
         </PopoverGroup>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
+          <a
+            href="http://localhost:3000/client/auth/login"
+            className="text-sm/6 font-semibold text-gray-900"
+          >
             ورود <span aria-hidden="true">&rarr;</span>
           </a>
-        </div>
-        <div>
           <a href="">
             <IoCart />
           </a>
         </div>
       </nav>
-      <Dialog
+      {/* <Dialog
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
         className="lg:hidden"
@@ -245,7 +246,7 @@ export default function Header() {
               </div>
               <div className="py-6">
                 <a
-                  href="#"
+                  href="http://localhost:3000/client/auth/login"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                 >
                   Log in
@@ -254,7 +255,7 @@ export default function Header() {
             </div>
           </div>
         </DialogPanel>
-      </Dialog>
+      </Dialog> */}
     </header>
   );
 }
