@@ -71,7 +71,7 @@ const LoginPage = () => {
         </div>
       </div>
       <div className="w-full ">
-        <img className="h-full" src={userLogo.src} alt="" />
+        <img className="h-full" src={userLogo.src} alt="userLogo" />
       </div>
     </div>
   );

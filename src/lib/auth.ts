@@ -33,7 +33,7 @@ export const useLoginRequest = () => {
       }, 1000);
     },
     onError: () => {
-      toast.error('ایمیل یا رمز عبور اشتباه است !', {
+      toast.error('نام کاربری یا رمز عبور اشتباه است !', {
         duration: 3000,
         position: 'top-left',
         style: {
@@ -45,3 +45,4 @@ export const useLoginRequest = () => {
     },
   });
 };
+

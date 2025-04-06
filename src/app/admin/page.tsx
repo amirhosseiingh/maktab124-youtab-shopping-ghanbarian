@@ -1,15 +1,17 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 import { Toaster } from 'react-hot-toast';
-export default function Providers({ children }: { children: ReactNode }) {
+import LoginPage from './login/page';
+export default function Providers() {
   const [queryClient] = useState(() => new QueryClient());
 
   return (
     <QueryClientProvider client={queryClient}>
       <Toaster />
-      {children}
+      <LoginPage/>
     </QueryClientProvider>
   );
 }
+
