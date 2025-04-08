@@ -1,36 +1,19 @@
-// import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import '../../styles/globals.css';
-// import Providers from '../page';
-// import { ChakraProvider } from '@chakra-ui/react';
+import Providers from '../app'; 
 import Sidebar from '@/components/layout/sideBar';
-
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+import '../../styles/globals.css';
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="fa" dir="rtl">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* <ChakraProvider> */}
-        {/* <Providers> */}
+      <body>
+        <Providers>
           <Sidebar />
           {children}
-        {/* </Providers> */}
-        {/* </ChakraProvider> */}
+        </Providers>
       </body>
     </html>
   );
