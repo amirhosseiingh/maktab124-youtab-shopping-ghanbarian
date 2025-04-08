@@ -13,3 +13,9 @@ export interface Order {
   address: string;
   products: Product[];
 }
+
+export type Props = {
+  order: Order;
+  onClose: () => void;
+  onSuccess: () => void;
+};

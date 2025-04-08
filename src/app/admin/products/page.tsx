@@ -20,6 +20,7 @@ export default function ProductPage() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const totalPages = Math.ceil(mockProducts.length / ITEMS_PER_PAGE);
 
+  
   const currentProducts = mockProducts
     .filter(
       product =>
