@@ -1,7 +1,12 @@
 export interface Product {
+  id: number;
   name: string;
-  quantity: number;
-  price: number;
+  category: string;
+  price: string;
+  stock: number;
+  images: string[];
+  description: string;
+  details: string[];
 }
 
 export interface Order {
