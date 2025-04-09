@@ -1,10 +1,10 @@
 import { BASE_URL, API_KEY } from '@/configues/envReader';
-import { Product } from '@/types/order';
+import {  ProductRecord } from '@/types/order';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
 export const useProductsQuery = () => {
-  return useQuery<Product[]>({
+  return useQuery<ProductRecord[]>({
     queryKey: ['products'],
     queryFn: async () => {
       const res = await axios.get(`${BASE_URL}/api/records/products`, {
@@ -12,7 +12,9 @@ export const useProductsQuery = () => {
           api_key: API_KEY,
         },
       });
+      console.log(res.data.records);
       return res.data.records;
+      
     },
   });
 };

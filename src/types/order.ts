@@ -9,6 +9,11 @@ export interface Product {
   details: string[];
 }
 
+export interface ProductRecord {
+  [key: string]: Product; 
+}
+
+
 export interface Order {
   id: string;
   createdAt: string;
