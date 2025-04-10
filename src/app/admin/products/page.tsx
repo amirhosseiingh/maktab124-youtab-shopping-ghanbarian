@@ -59,11 +59,7 @@ const ProductsTable = () => {
   const handleView = (id: number) => {
     console.log(`${id}`);
   };
-
-  const formatPrice = (price: number) => {
-    return `${new Intl.NumberFormat('fa-IR').format(price)} تومان`;
-  };
-
+  
   return (
     <div className="pr-64 min-h-screen bg-green-50 flex flex-col">
       <div className="p-6">
@@ -154,7 +150,7 @@ const ProductsTable = () => {
                     {product.category}
                   </td>
                   <td className="px-6 py-4 text-center text-gray-500">
-                    {formatPrice(product.price)}
+                    {product.price}
                   </td>
                   <td className="px-6 py-4 text-center text-gray-500">
                     {product.stock}
