@@ -12,7 +12,7 @@ export const useProductsQuery = () => {
           api_key: API_KEY,
         },
       });
-      console.log(res.data.records);
+      // console.log(res.data.records);
       return res.data.records;
     },
   });

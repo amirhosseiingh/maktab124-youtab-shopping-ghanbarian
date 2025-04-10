@@ -3,20 +3,8 @@ import React, { useState } from 'react';
 import { useProductsQuery } from '@/lib/getProducts';
 import { MoreVertical, Eye, Pencil, Trash } from 'lucide-react';
 import Pagination from '@/components/base/pagination';
-
-const searchProducts = (products: any[], query: string) => {
-  return products.filter(product =>
-    product.name.toLowerCase().includes(query.toLowerCase())
-  );
-};
-
-const filterByCategory = (products: any[], category: string) => {
-  return category
-    ? products.filter(
-        (product: { category: any }) => product.category === category
-      )
-    : products;
-};
+import { filterByCategory } from '@/utils/productFilter';
+import { searchProducts } from '@/utils/productSearch';
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
@@ -61,28 +49,32 @@ const ProductsTable = () => {
   };
 
   const handleEdit = (id: number) => {
-    console.log(`ویرایش محصول با شناسه ${id}`);
+    console.log(`${id}`);
   };
 
   const handleDelete = (id: number) => {
-    console.log(`حذف محصول با شناسه ${id}`);
+    console.log(`${id}`);
   };
 
   const handleView = (id: number) => {
-    console.log(`نمایش محصول با شناسه ${id}`);
+    console.log(`${id}`);
+  };
+
+  const formatPrice = (price: number) => {
+    return `${new Intl.NumberFormat('fa-IR').format(price)} تومان`;
   };
 
   return (
     <div className="pr-64 min-h-screen bg-green-50 flex flex-col">
       <div className="p-6">
-        <h2 className="text-2xl font-bold mb-6 text-right">لیست محصولات</h2>
+        <h2 className="text-2xl font-bold mb-6 text-right">لیست محصولات فروشگاه یوتاب</h2>
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-2">
             <button className="bg-green-600 text-white px-4 py-2 rounded-sm hover:bg-green-700 transition">
               افزودن محصول
             </button>
             <select
-              className="border border-gray-300 rounded-xl px-5 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="border border-green-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
               value={selectedCategory}
               onChange={e => setSelectedCategory(e.target.value)}
             >
@@ -95,7 +87,7 @@ const ProductsTable = () => {
           <input
             type="text"
             placeholder="جستجو محصول..."
-            className="border border-gray-300 rounded-xl px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="border border-green-300 rounded-xl px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-green-400"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />
@@ -108,7 +100,7 @@ const ProductsTable = () => {
             role="alert"
           >
             <svg
-              className="shrink-0 w-4 h-4 "
+              className="shrink-0 w-4 h-4"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -116,7 +108,7 @@ const ProductsTable = () => {
             >
               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
             </svg>
-            <div className="ms-3 text-sm font-medium text-gray-800 ">
+            <div className="ms-3 text-sm font-medium text-gray-800">
               محصولی با این مشخصات یافت نشد!
             </div>
           </div>
@@ -162,7 +154,7 @@ const ProductsTable = () => {
                     {product.category}
                   </td>
                   <td className="px-6 py-4 text-center text-gray-500">
-                    {product.price}
+                    {formatPrice(product.price)}
                   </td>
                   <td className="px-6 py-4 text-center text-gray-500">
                     {product.stock}
@@ -205,8 +197,6 @@ const ProductsTable = () => {
             </tbody>
           </table>
         )}
-
-        {/* Pagination */}
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

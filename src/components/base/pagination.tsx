@@ -6,7 +6,7 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   return (
-    <div className="py-4 bg-green-50 shadow-inner border-t flex justify-center space-x-2 mt-4">
+    <div className="py-4 bg-green-50 flex justify-center space-x-2 mt-4">
       {Array.from({ length: totalPages }).map((_, idx) => (
         <button
           key={idx}

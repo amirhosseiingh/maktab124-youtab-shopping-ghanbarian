@@ -12,7 +12,9 @@ export const useOrdersQuery = () => {
           api_key: API_KEY,
         },
       });
+      console.log(res);
       return res.data.records;
+      
     },
   });
 };

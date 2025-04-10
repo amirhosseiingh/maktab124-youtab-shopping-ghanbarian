@@ -6,21 +6,38 @@ import { useState } from 'react';
 import OrderStatusModal from '../../../components/base/OrderStatusModal';
 import { Toaster } from 'react-hot-toast';
 import { getStatusColor } from '@/components/ui/getStatusColor';
-import Pagination from '@/components/base/pagination'; 
+import Pagination from '@/components/base/pagination';
+import { filterItemsByKey } from '@/utils/orderFilter';
+import { searchItems } from '@/utils/orderSearch';
 
 const OrdersTable = () => {
   const { data: orders, isLoading, isError, refetch } = useOrdersQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+
   const ordersPerPage = 7;
   const safeOrders = orders || [];
 
-  const totalPages = Math.ceil(safeOrders.length / ordersPerPage);
-  const currentOrders = safeOrders.slice(
-    (currentPage - 1) * ordersPerPage,
-    currentPage * ordersPerPage
-  );
+
+
+const filteredOrders = filterItemsByKey(safeOrders, 'status', selectedStatus);
+const finalOrders = searchItems(filteredOrders, searchQuery, 'username');
+
+
+const totalPages = Math.ceil(finalOrders.length / ordersPerPage);
+const currentOrders = finalOrders.slice(
+  (currentPage - 1) * ordersPerPage,
+  currentPage * ordersPerPage
+);
+
+
+const formatPrice = (price: number) => {
+  return `${new Intl.NumberFormat('fa-IR').format(price)} تومان`;
+};
+
 
   if (isLoading)
     return (
@@ -37,6 +54,26 @@ const OrdersTable = () => {
       <Toaster />
       <div className="p-6">
         <h2 className="text-xl font-bold mb-4">لیست سفارشات</h2>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+          <input
+            type="text"
+            placeholder="جستجو بر اساس نام مشتری..."
+            className="border border-gray-300 rounded-xl px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-green-400"
+            value={searchQuery}
+            onChange={e => setSearchQuery(e.target.value)}
+          />
+          <select
+            className="border border-gray-300 rounded-xl px-5 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+            value={selectedStatus}
+            onChange={e => setSelectedStatus(e.target.value)}
+          >
+            <option value="">فیلتر </option>
+            <option value="در حال ارسال">در حال ارسال</option>
+            <option value="تحویل داده شده">تحویل داده شده</option>
+            <option value="لغو شده">لغو شده</option>
+          </select>
+        </div>
+
         <table className="min-w-full table-auto bg-white border border-gray-200 shadow-md">
           <thead>
             <tr className="bg-gray-100">
@@ -54,11 +91,9 @@ const OrdersTable = () => {
                 </td>
                 <td className="px-4 py-2 text-center text-gray-700">
                   {order.totalAmount
-                    ? order.totalAmount.toLocaleString()
-                    : 'نامشخص'}{' '}
-                  تومان
+                    ? formatPrice(order.totalAmount)
+                    : 'نامشخص'}
                 </td>
-
                 <td className="px-4 py-2 text-center text-gray-700">
                   {new Date(order.createdAt).toLocaleDateString('fa-IR')}
                 </td>
@@ -79,7 +114,7 @@ const OrdersTable = () => {
           </tbody>
         </table>
 
-        <div className="absolute bottom-0 left-0 w-full  shadow-inner   pr-64">
+        <div className="absolute bottom-0 left-0 w-full  pr-64">
           <Pagination
             totalPages={totalPages}
             currentPage={currentPage}
