@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 const menuItems = [
-  { name: 'داشبورد', href: '/admin', icon: HomeIcon },
+  { name: 'داشبورد', href: '/admin/dashboard', icon: HomeIcon },
   { name: 'محصولات', href: '/admin/products', icon: CubeIcon },
   { name: 'سفارش‌ها', href: '/admin/orders', icon: ClipboardIcon },
   { name: 'کاربران', href: '/admin/users', icon: UsersIcon },
@@ -17,6 +17,9 @@ const menuItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  if (pathname === '/admin') {
+    return null;
+  }
 
   return (
     <aside className="w-64 h-screen bg-gray-900 text-white fixed top-0 right-0 flex flex-col z-50">

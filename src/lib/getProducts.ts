@@ -1,5 +1,5 @@
-import { BASE_URL, API_KEY } from '@/configues/envReader';
-import {  ProductRecord } from '@/types/order';
+import { BASE_URL, API_KEY } from '@/configs/envReader';
+import { ProductRecord } from '@/types/order';
 import axios from 'axios';
 import { useQuery } from 'react-query';
 
@@ -14,7 +14,6 @@ export const useProductsQuery = () => {
       });
       console.log(res.data.records);
       return res.data.records;
-      
     },
   });
 };

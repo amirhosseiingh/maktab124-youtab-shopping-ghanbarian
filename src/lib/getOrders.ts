@@ -1,4 +1,4 @@
-import { BASE_URL, API_KEY } from '@/configues/envReader';
+import { BASE_URL, API_KEY } from '@/configs/envReader';
 import { Order } from '@/types/order';
 import axios from 'axios';
 import { useQuery } from 'react-query';

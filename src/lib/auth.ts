@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/navigation';
-import { BASE_URL, API_KEY } from '../configues/envReader';
+import { BASE_URL, API_KEY } from '../configs/envReader';
 import { toast } from 'react-hot-toast';
 
 export const useLoginRequest = () => {
@@ -23,7 +23,7 @@ export const useLoginRequest = () => {
         duration: 3000,
         position: 'top-left',
         style: {
-          background: '#50a14f',
+          background: '#016630',
           width: '180px',
           color: '#fff',
         },
@@ -37,8 +37,8 @@ export const useLoginRequest = () => {
         duration: 3000,
         position: 'top-left',
         style: {
-          background: '#50a14f',
-          width: '250px',
+          background: '#016630',
+          width: '270px',
           color: '#fff',
         },
       });

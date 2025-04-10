@@ -1,7 +1,7 @@
 // lib/useUpdateOrderStatus.ts
 import axios from 'axios';
 import { useMutation } from 'react-query';
-import { BASE_URL, API_KEY } from '@/configues/envReader';
+import { BASE_URL, API_KEY } from '@/configs/envReader';
 
 export const useUpdateOrderStatus = () => {
   return useMutation({
