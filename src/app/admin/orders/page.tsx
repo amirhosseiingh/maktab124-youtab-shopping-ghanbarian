@@ -6,13 +6,14 @@ import { useState } from 'react';
 import OrderStatusModal from '../../../components/base/OrderStatusModal';
 import { Toaster } from 'react-hot-toast';
 import { getStatusColor } from '@/components/ui/getStatusColor';
+import Pagination from '@/components/base/pagination'; 
 
 const OrdersTable = () => {
   const { data: orders, isLoading, isError, refetch } = useOrdersQuery();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
-  const ordersPerPage = 5;
+  const ordersPerPage = 7;
   const safeOrders = orders || [];
 
   const totalPages = Math.ceil(safeOrders.length / ordersPerPage);
@@ -78,21 +79,12 @@ const OrdersTable = () => {
           </tbody>
         </table>
 
-        {/* Pagination */}
-        <div className="py-4 bg-white shadow-inner border-t flex justify-center space-x-2">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentPage(idx + 1)}
-              className={`px-3 py-1 border rounded ${
-                currentPage === idx + 1
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-white text-gray-700'
-              }`}
-            >
-              {idx + 1}
-            </button>
-          ))}
+        <div className="absolute bottom-0 left-0 w-full  shadow-inner   pr-64">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </div>
 

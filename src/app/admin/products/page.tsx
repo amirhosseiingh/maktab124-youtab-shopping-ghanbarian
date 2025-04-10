@@ -2,6 +2,21 @@
 import React, { useState } from 'react';
 import { useProductsQuery } from '@/lib/getProducts';
 import { MoreVertical, Eye, Pencil, Trash } from 'lucide-react';
+import Pagination from '@/components/base/pagination';
+
+const searchProducts = (products: any[], query: string) => {
+  return products.filter(product =>
+    product.name.toLowerCase().includes(query.toLowerCase())
+  );
+};
+
+const filterByCategory = (products: any[], category: string) => {
+  return category
+    ? products.filter(
+        (product: { category: any }) => product.category === category
+      )
+    : products;
+};
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
@@ -32,18 +47,11 @@ const ProductsTable = () => {
       )
     ) || [];
 
-  const filteredProducts = allProducts.filter(product => {
-    const matchesSearch = product.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory
-      ? product.category === selectedCategory
-      : true;
-    return matchesSearch && matchesCategory;
-  });
+  const filteredProducts = filterByCategory(allProducts, selectedCategory);
+  const finalProducts = searchProducts(filteredProducts, searchQuery);
 
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
-  const currentProducts = filteredProducts.slice(
+  const totalPages = Math.ceil(finalProducts.length / productsPerPage);
+  const currentProducts = finalProducts.slice(
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage
   );
@@ -53,15 +61,15 @@ const ProductsTable = () => {
   };
 
   const handleEdit = (id: number) => {
-    console.log(` ${id}`);
+    console.log(`ویرایش محصول با شناسه ${id}`);
   };
 
   const handleDelete = (id: number) => {
-    console.log(` ${id}`);
+    console.log(`حذف محصول با شناسه ${id}`);
   };
 
   const handleView = (id: number) => {
-    console.log(`${id}`);
+    console.log(`نمایش محصول با شناسه ${id}`);
   };
 
   return (
@@ -79,12 +87,11 @@ const ProductsTable = () => {
               onChange={e => setSelectedCategory(e.target.value)}
             >
               <option value="">همه دسته‌بندی‌ها</option>
-              <option value="الکترونیکی">آرایشی</option>
-              <option value="پوشاک">بهداشتی</option>
-              <option value="لوازم خانگی"> مو</option>
+              <option value="آرایشی">آرایشی</option>
+              <option value="بهداشتی">بهداشتی</option>
+              <option value="مو">مو</option>
             </select>
           </div>
-
           <input
             type="text"
             placeholder="جستجو محصول..."
@@ -94,96 +101,117 @@ const ProductsTable = () => {
           />
         </div>
 
-        <table className="table-auto w-full bg-white shadow-md rounded-lg">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
-                تصویر
-              </th>
-              <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
-                نام
-              </th>
-              <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
-                دسته‌بندی
-              </th>
-              <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
-                قیمت
-              </th>
-              <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
-                موجودی
-              </th>
-              <th>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentProducts.map(product => (
-              <tr key={product.id} className="hover:bg-gray-50 transition-all">
-                <td className="px-6 py-4 text-center">
-                  <img
-                    src={product.images[0]}
-                    alt={product.name}
-                    className="w-16 h-16 object-cover rounded"
-                  />
-                </td>
-                <td className="px-6 py-4 text-center text-gray-700">{product.name}</td>
-                <td className="px-6 py-4 text-center text-gray-500">{product.category}</td>
-                <td className="px-6 py-4 text-center text-gray-500">{product.price}</td>
-                <td className="px-6 py-4 text-center text-gray-500">{product.stock}</td>
-                <td className="px-6 py-4 text-center relative">
-                  <button
-                    onClick={() => toggleMenu(product.id)}
-                    className="text-gray-600 hover:text-gray-800"
-                  >
-                    <MoreVertical className="w-5 h-5" />
-                  </button>
-                  {showMenu === product.id && (
-                    <div className="absolute left-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-xl z-10 overflow-hidden text-sm">
-                      <button
-                        onClick={() => handleView(product.id)}
-                        className="flex items-center justify-between w-full px-4 py-2 hover:bg-blue-100 text-blue-600"
-                      >
-                        نمایش
-                        <Eye className="w-4 h-4 text-blue-500" />
-                      </button>
-                      <button
-                        onClick={() => handleEdit(product.id)}
-                        className="flex items-center justify-between w-full px-4 py-2 hover:bg-yellow-100 text-yellow-600"
-                      >
-                        ویرایش
-                        <Pencil className="w-4 h-4 text-yellow-500" />
-                      </button>
-                      <button
-                        onClick={() => handleDelete(product.id)}
-                        className="flex items-center justify-between w-full px-4 py-2 hover:bg-red-100 text-red-600"
-                      >
-                        حذف
-                        <Trash className="w-4 h-4 text-red-500" />
-                      </button>
-                    </div>
-                  )}
-                </td>
+        {finalProducts.length === 0 ? (
+          <div
+            id="alert-border-5"
+            className="flex items-center p-4 border-t-4 border-green-600 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+            role="alert"
+          >
+            <svg
+              className="shrink-0 w-4 h-4 "
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z" />
+            </svg>
+            <div className="ms-3 text-sm font-medium text-gray-800 ">
+              محصولی با این مشخصات یافت نشد!
+            </div>
+          </div>
+        ) : (
+          <table className="table-auto w-full bg-white shadow-md rounded-lg">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
+                  تصویر
+                </th>
+                <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
+                  نام
+                </th>
+                <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
+                  دسته‌بندی
+                </th>
+                <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
+                  قیمت
+                </th>
+                <th className="px-6 py-3 text-sm text-gray-800 font-lg text-center">
+                  موجودی
+                </th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentProducts.map(product => (
+                <tr
+                  key={product.id}
+                  className="hover:bg-gray-50 transition-all"
+                >
+                  <td className="px-6 py-4 text-center">
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="w-16 h-16 object-cover rounded"
+                    />
+                  </td>
+                  <td className="px-6 py-4 text-center text-gray-700">
+                    {product.name}
+                  </td>
+                  <td className="px-6 py-4 text-center text-gray-500">
+                    {product.category}
+                  </td>
+                  <td className="px-6 py-4 text-center text-gray-500">
+                    {product.price}
+                  </td>
+                  <td className="px-6 py-4 text-center text-gray-500">
+                    {product.stock}
+                  </td>
+                  <td className="px-6 py-4 text-center relative">
+                    <button
+                      onClick={() => toggleMenu(product.id)}
+                      className="text-gray-600 hover:text-gray-800"
+                    >
+                      <MoreVertical className="w-5 h-5" />
+                    </button>
+                    {showMenu === product.id && (
+                      <div className="absolute left-0 mt-2 w-36 bg-white border border-gray-200 rounded-lg shadow-xl z-10 overflow-hidden text-sm">
+                        <button
+                          onClick={() => handleView(product.id)}
+                          className="flex items-center justify-between w-full px-4 py-2 hover:bg-blue-100 text-blue-600"
+                        >
+                          نمایش
+                          <Eye className="w-4 h-4 text-blue-500" />
+                        </button>
+                        <button
+                          onClick={() => handleEdit(product.id)}
+                          className="flex items-center justify-between w-full px-4 py-2 hover:bg-yellow-100 text-yellow-600"
+                        >
+                          ویرایش
+                          <Pencil className="w-4 h-4 text-yellow-500" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(product.id)}
+                          className="flex items-center justify-between w-full px-4 py-2 hover:bg-red-100 text-red-600"
+                        >
+                          حذف
+                          <Trash className="w-4 h-4 text-red-500" />
+                        </button>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
 
         {/* Pagination */}
-        <div className="py-4 bg-white shadow-inner border-t flex justify-center space-x-2 mt-4">
-          {Array.from({ length: totalPages }).map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentPage(idx + 1)}
-              className={`px-4 py-2 border rounded-lg transition-all ${
-                currentPage === idx + 1
-                  ? 'bg-indigo-600 text-white'
-                  : 'bg-white text-gray-700'
-              }`}
-            >
-              {idx + 1}
-            </button>
-          ))}
-        </div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
       </div>
     </div>
   );

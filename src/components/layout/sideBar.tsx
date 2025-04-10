@@ -19,7 +19,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-64 h-screen bg-gray-900 text-white fixed top-0 right-0 flex flex-col">
+    <aside className="w-64 h-screen bg-gray-900 text-white fixed top-0 right-0 flex flex-col z-50">
       <div className="px-6 py-4 text-lg font-bold border-b border-gray-700">
         پنل ادمین
       </div>
