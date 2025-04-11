@@ -1,18 +1,48 @@
 'use client';
 import React, { useState } from 'react';
-import { useProductsQuery } from '@/lib/getProducts';
-import { MoreVertical, Eye, Pencil, Trash } from 'lucide-react';
+import { useAddProductMutation } from '@/lib/productService';
+import AddProductModal from '@/components/base/AddProductModal';
 import Pagination from '@/components/base/pagination';
 import { filterByCategory } from '@/utils/productFilter';
 import { searchProducts } from '@/utils/productSearch';
+import { MoreVertical, Eye, Pencil, Trash } from 'lucide-react';
+import { useProductsQuery } from '@/lib/getProducts';
+import toast from 'react-hot-toast';
+
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
+  const addProductMutation = useAddProductMutation();
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMenu, setShowMenu] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const productsPerPage = 5;
+
+  const handleModalOpen = () => setIsModalOpen(true);
+  const handleModalClose = () => setIsModalOpen(false);
+
+  const handleAddProduct = (formData: any) => {
+    addProductMutation.mutate(formData, {
+      onSuccess: () => {
+        toast.success('محصول جديد ثبت شد', {
+          duration: 3000,
+          position: 'bottom-center',
+          style: {
+            background: '#016630',
+            width: '180px',
+            color: '#fff',
+          },
+        });
+        handleModalClose();
+      },
+      onError: error => {
+        console.error('Error adding product:', error);
+      },
+    });
+  };
 
   if (isLoading) {
     return (
@@ -29,9 +59,10 @@ const ProductsTable = () => {
   }
 
   const allProducts =
-    records?.flatMap(record =>
+    records?.flatMap((record: any) =>
       Object.values(record || {}).filter(
-        item => item && typeof item === 'object' && item.id
+        (item: any) =>
+          item && typeof item === 'object' && (item as { id: number }).id
       )
     ) || [];
 
@@ -44,31 +75,43 @@ const ProductsTable = () => {
     currentPage * productsPerPage
   );
 
-  const toggleMenu = (id: number) => {
+  function handleDelete(id: any): void {
+    throw new Error('delete succesful');
+  }
+
+  function toggleMenu(id: any): void {
     setShowMenu(showMenu === id ? null : id);
-  };
+  }
 
-  const handleEdit = (id: number) => {
-    console.log(`${id}`);
-  };
+  function handleView(id: any): void {
+    throw new Error('view succesful');
+  }
 
-  const handleDelete = (id: number) => {
-    console.log(`${id}`);
-  };
+  function handleEdit(id: any): void {
+    throw new Error('edit succesful');
+  }
 
-  const handleView = (id: number) => {
-    console.log(`${id}`);
-  };
-  
   return (
     <div className="pr-64 min-h-screen bg-green-50 flex flex-col">
       <div className="p-6">
-        <h2 className="text-2xl font-bold mb-6 text-right">لیست محصولات فروشگاه یوتاب</h2>
+        <h2 className="text-2xl font-bold mb-6 text-right">
+          لیست محصولات فروشگاه یوتاب
+        </h2>
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
           <div className="flex items-center gap-2">
-            <button className="bg-green-600 text-white px-4 py-2 rounded-sm hover:bg-green-700 transition">
+            <button
+              onClick={handleModalOpen}
+              className="bg-green-600 text-white px-4 py-2 rounded-sm hover:bg-green-700 transition"
+            >
               افزودن محصول
             </button>
+            {isModalOpen && (
+              <AddProductModal
+                onClose={handleModalClose}
+                onSubmit={handleAddProduct}
+              />
+            )}
+
             <select
               className="border border-green-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
               value={selectedCategory}
@@ -92,12 +135,11 @@ const ProductsTable = () => {
         {finalProducts.length === 0 ? (
           <div
             id="alert-border-5"
-            className="flex items-center p-4 border-t-4 border-green-600 bg-gray-50 dark:bg-gray-800 dark:border-gray-600"
+            className="flex items-center p-4 border-t-4 border-green-600 bg-gray-50"
             role="alert"
           >
             <svg
               className="shrink-0 w-4 h-4"
-              aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
               viewBox="0 0 20 20"

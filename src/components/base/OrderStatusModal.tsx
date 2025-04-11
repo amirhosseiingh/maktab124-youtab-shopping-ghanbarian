@@ -73,7 +73,7 @@ const OrderStatusModal = ({ order, onClose, onSuccess }: Props) => {
             <strong>کاربر:</strong> {order.username}
           </p>
         </div>
-        <div className="flex items-center mb-4 gap-1 gap-1">
+        <div className="flex items-center mb-4 gap-1">
           <FaMoneyBill className="text-green-600 mr-2" />
           <p>
             <strong>مبلغ:</strong> {order.totalAmount.toLocaleString()} تومان
