@@ -13,6 +13,15 @@ export interface ProductRecord {
   [key: string]: Product; 
 }
 
+export interface ProductsTableProps {
+  products: Product[];
+  toggleMenu: (id: number) => void;
+  showMenu: number | null;
+  handleView: (id: number) => void;
+  handleEdit: (id: number) => void;
+  handleDelete: (id: number) => void;
+}
+
 
 export interface Order {
   id: string;
@@ -29,3 +38,8 @@ export type Props = {
   onClose: () => void;
   onSuccess: () => void;
 };
+
+export interface AddProductModalProps {
+  onClose: () => void;
+  onSubmit: (formData: any) => void;
+}

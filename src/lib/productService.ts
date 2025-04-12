@@ -7,6 +7,12 @@ export const useAddProductMutation = () => {
 
   return useMutation({
     mutationFn: async (productData: any) => {
+      const accessToken = localStorage.getItem('accessToken'); 
+
+      if (!accessToken) {
+        throw new Error('Access token is missing');
+      }
+
       const res = await axios.post(
         `${BASE_URL}/api/records/products`,
         productData,
@@ -14,7 +20,7 @@ export const useAddProductMutation = () => {
           headers: {
             api_key: API_KEY,
             'Content-Type': 'application/json',
-            Authorization:" Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3ZDNjYTA5NTNkNjcxZTRkMWRmNjQ2YiIsImlhdCI6MTc0NDMwNDQ2OCwiZXhwIjoxNzQ0NDc3MjY4fQ.p4Wj4iXNDgknqNzNAwelcpV9ixtWDnMwxK5a6ukdh1c"
+            Authorization: `Bearer ${accessToken}`,
           },
         }
       );
