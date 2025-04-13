@@ -8,18 +8,17 @@ export const useUploadImage = () =>
       formData.append('image', image);
 
       const accessToken = localStorage.getItem('access'); 
-      const headers = new Headers({
-        api_key: API_KEY || '', 
-        Authorization: `Bearer ${accessToken}`,
-      });
       if (!accessToken) {
         throw new Error('No access token found');
       }
 
       const response = await fetch(BASE_URL + '/api/files/upload', {
         method: 'POST',
+        headers: {
+          api_key: API_KEY || '',
+          Authorization: `Bearer ${accessToken}`,
+        },
         body: formData,
-        headers: headers,
       });
 
       if (!response.ok) {

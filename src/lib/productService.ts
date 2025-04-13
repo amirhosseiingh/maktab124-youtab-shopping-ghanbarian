@@ -7,7 +7,7 @@ export const useAddProductMutation = () => {
 
   return useMutation({
     mutationFn: async (productData: any) => {
-      const accessToken = localStorage.getItem('accessToken'); 
+      const accessToken = localStorage.getItem('access'); 
 
       if (!accessToken) {
         throw new Error('Access token is missing');
