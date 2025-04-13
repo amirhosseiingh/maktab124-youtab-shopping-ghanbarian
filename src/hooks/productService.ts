@@ -1,13 +1,14 @@
 import { BASE_URL, API_KEY } from '@/configs/envReader';
 import axios from 'axios';
 import { useMutation, useQueryClient } from 'react-query';
+import toast from 'react-hot-toast';
 
 export const useAddProductMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (productData: any) => {
-      const accessToken = localStorage.getItem('access'); 
+      const accessToken = localStorage.getItem('access');
 
       if (!accessToken) {
         throw new Error('Access token is missing');
@@ -27,10 +28,12 @@ export const useAddProductMutation = () => {
       return res.data;
     },
     onSuccess: () => {
+      toast.success('محصول با موفقیت اضافه شد ');
       queryClient.invalidateQueries('products');
     },
-    onError: error => {
+    onError: (error: any) => {
       console.error('Error adding product:', error);
+      toast.error('خطا در افزودن محصول ');
     },
   });
 };

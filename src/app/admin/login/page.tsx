@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import userLogo from '../../../assets/images/youtab logo.png';
-import { useLoginRequest } from '@/lib/auth';
+import { useLoginRequest } from '@/hooks/auth';
 import iconLogInPage from '../../../assets/images/icons8-group-100.png'
 const LoginPage = () => {
   const [show, setShow] = useState(false);

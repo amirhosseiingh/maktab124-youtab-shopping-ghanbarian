@@ -1,20 +1,26 @@
 'use client';
 import React, { useState } from 'react';
-import { useAddProductMutation } from '@/lib/productService';
-import AddProductModal from '@/components/base/AddProductModal';
+import { useAddProductMutation } from '@/hooks/productService';
+import { useDeleteProduct } from '@/hooks/useDeleteProduct ';
+import AddProductModal from '@/components/modals/AddProductModal';
 import Pagination from '@/components/base/pagination';
 import { filterByCategory } from '@/utils/productFilter';
 import { searchProducts } from '@/utils/productSearch';
 import { MoreVertical, Eye, Pencil, Trash } from 'lucide-react';
-import { useProductsQuery } from '@/lib/getProducts';
-import toast from 'react-hot-toast';
+import { useProductsQuery } from '@/hooks/getProducts';
+import toast, { Toaster } from 'react-hot-toast';
 import NoResult from '@/components/noResult/noResult';
 import { BASE_URL } from '@/configs/envReader';
-
+import DeleteConfirmModal from '@/components/modals/deleteModal';
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
   const addProductMutation = useAddProductMutation();
+  const deleteProductMutation = useDeleteProduct();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState<string | null>(
+    null
+  );
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMenu, setShowMenu] = useState<number | null>(null);
@@ -29,21 +35,35 @@ const ProductsTable = () => {
   const handleAddProduct = (formData: any) => {
     addProductMutation.mutate(formData, {
       onSuccess: () => {
-        toast.success('محصول جديد ثبت شد', {
-          duration: 3000,
-          position: 'bottom-center',
-          style: {
-            background: '#016630',
-            width: '180px',
-            color: '#fff',
-          },
-        });
         handleModalClose();
       },
       onError: error => {
-        console.error('Error adding product:', error);
+        console.error(error);
       },
     });
+  };
+
+  const handleDelete = (id: string): void => {
+    setSelectedProductId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (!selectedProductId) return;
+    deleteProductMutation.mutate(selectedProductId, {
+      onSuccess: () => {
+        setIsDeleteModalOpen(false);
+        setSelectedProductId(null);
+      },
+      onError: () => {
+        setIsDeleteModalOpen(false);
+      },
+    });
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedProductId(null);
   };
 
   if (isLoading) {
@@ -60,13 +80,7 @@ const ProductsTable = () => {
     );
   }
 
-  const allProducts =
-    records?.flatMap((record: any) =>
-      Object.values(record || {}).filter(
-        (item: any) =>
-          item && typeof item === 'object' && (item as { id: number }).id
-      )
-    ) || [];
+  const allProducts = Array.isArray(records) ? records : [];
 
   const filteredProducts = filterByCategory(allProducts, selectedCategory);
   const finalProducts = searchProducts(filteredProducts, searchQuery);
@@ -76,10 +90,6 @@ const ProductsTable = () => {
     (currentPage - 1) * productsPerPage,
     currentPage * productsPerPage
   );
-
-  function handleDelete(id: any): void {
-    throw new Error('delete succesful');
-  }
 
   function toggleMenu(id: any): void {
     setShowMenu(showMenu === id ? null : id);
@@ -95,6 +105,7 @@ const ProductsTable = () => {
 
   return (
     <div className="pr-64 min-h-screen bg-green-50 flex flex-col">
+      <Toaster />
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-6 text-right">
           لیست محصولات فروشگاه یوتاب
@@ -165,7 +176,7 @@ const ProductsTable = () => {
                   className="hover:bg-gray-50 transition-all"
                 >
                   <td className="px-6 py-4 text-center">
-                    {product.images[0] ? (
+                    {product.images?.[0] ? (
                       <img
                         src={`${BASE_URL}${product.images[0]}`}
                         alt={product.name}
@@ -232,6 +243,13 @@ const ProductsTable = () => {
           onPageChange={setCurrentPage}
         />
       </div>
+
+      {isDeleteModalOpen && (
+        <DeleteConfirmModal
+          onConfirm={handleConfirmDelete}
+          onCancel={handleCancelDelete}
+        />
+      )}
     </div>
   );
 };

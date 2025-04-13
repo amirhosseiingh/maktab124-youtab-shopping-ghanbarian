@@ -1,9 +1,9 @@
 'use client';
 
-import { useOrdersQuery } from '@/lib/getOrders';
+import { useOrdersQuery } from '@/hooks/getOrders';
 import { Order } from '@/types/order';
 import { useState } from 'react';
-import OrderStatusModal from '../../../components/base/OrderStatusModal';
+import OrderStatusModal from '../../../components/modals/OrderStatusModal';
 import { Toaster } from 'react-hot-toast';
 import { getStatusColor } from '@/components/ui/getStatusColor';
 import Pagination from '@/components/base/pagination';

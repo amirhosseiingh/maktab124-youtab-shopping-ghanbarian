@@ -1,7 +1,7 @@
 'use client';
 
 import {  Props } from '@/types/order';
-import { useUpdateOrderStatus } from '@/lib/useUpdateOrderStatus';
+import { useUpdateOrderStatus } from '@/hooks/useUpdateOrderStatus';
 import toast from 'react-hot-toast';
 import { useState } from 'react';
 import {
