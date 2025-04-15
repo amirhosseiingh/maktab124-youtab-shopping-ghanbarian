@@ -12,6 +12,8 @@ import toast, { Toaster } from 'react-hot-toast';
 import NoResult from '@/components/noResult/noResult';
 import { BASE_URL } from '@/configs/envReader';
 import DeleteConfirmModal from '@/components/modals/deleteModal';
+import ProductModal from '@/components/modals/ProductModal';
+import { ProductRecord } from '@/types/order';
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
@@ -21,12 +23,16 @@ const ProductsTable = () => {
   const [selectedProductId, setSelectedProductId] = useState<string | null>(
     null
   );
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showMenu, setShowMenu] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
+ const [selectedProduct, setSelectedProduct] = useState<ProductRecord | null>(
+   null
+ );
+
   const productsPerPage = 5;
 
   const handleModalOpen = () => setIsModalOpen(true);
@@ -42,6 +48,22 @@ const ProductsTable = () => {
       },
     });
   };
+
+  const handleViewModalOpen = () => setIsViewModalOpen(true);
+  const handleViewModalClose = () => setIsViewModalOpen(false);
+
+const handleView = (productId: string): void => {
+  if (!records) {
+    console.error('Records is undefined');
+    return;
+  }
+
+  const product = records.find((prod: any) => prod.id === productId);
+  if (product) {
+    setSelectedProduct(product);
+    handleViewModalOpen();
+  }
+};
 
   const handleDelete = (id: string): void => {
     setSelectedProductId(id);
@@ -65,11 +87,11 @@ const ProductsTable = () => {
     setIsDeleteModalOpen(false);
     setSelectedProductId(null);
   };
-
+  
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-green-50 pr-64">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center min-h-screen pr-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-600"></div>
       </div>
     );
   }
@@ -93,14 +115,6 @@ const ProductsTable = () => {
 
   function toggleMenu(id: any): void {
     setShowMenu(showMenu === id ? null : id);
-  }
-
-  function handleView(id: any): void {
-    throw new Error('view succesful');
-  }
-
-  function handleEdit(id: any): void {
-    throw new Error('edit succesful');
   }
 
   return (
@@ -248,6 +262,14 @@ const ProductsTable = () => {
         <DeleteConfirmModal
           onConfirm={handleConfirmDelete}
           onCancel={handleCancelDelete}
+        />
+      )}
+
+      {isViewModalOpen && selectedProduct && (
+        <ProductModal
+          isOpen={isViewModalOpen}
+          onClose={handleViewModalClose}
+          product={selectedProduct}
         />
       )}
     </div>

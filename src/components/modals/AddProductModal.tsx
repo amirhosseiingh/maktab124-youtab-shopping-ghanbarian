@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { useUploadImage } from '@/hooks/useuploadImage';
+import { useUploadImage } from '@/hooks/useUploadImage';
 
 const AddProductModal = ({
   onClose,
