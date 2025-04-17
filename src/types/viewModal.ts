@@ -1,3 +1,5 @@
+import { Product } from "./order";
+
 export type ProductType = {
   name: string;
   brand: string;
@@ -13,5 +15,5 @@ export type ProductType = {
 export type ProductModalProps = {
   isOpen: boolean;
   onClose: () => void;
-  product: ProductType | null;
+  product: Product ;
 };

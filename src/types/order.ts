@@ -7,6 +7,8 @@ export interface Product {
   images: string[];
   description: string;
   details: string[];
+  brand : string;
+  star : string
 }
 
 export interface ProductRecord {

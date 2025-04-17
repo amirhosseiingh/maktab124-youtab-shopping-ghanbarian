@@ -14,6 +14,7 @@ import { BASE_URL } from '@/configs/envReader';
 import DeleteConfirmModal from '@/components/modals/deleteModal';
 import ProductModal from '@/components/modals/ProductModal';
 import { ProductRecord } from '@/types/order';
+import EditProductModal from '@/components/modals/editModal';
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
@@ -29,14 +30,24 @@ const ProductsTable = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
- const [selectedProduct, setSelectedProduct] = useState<ProductRecord | null>(
-   null
- );
-
+  const [selectedProduct, setSelectedProduct] = useState<ProductRecord | null>(
+    null
+  );
   const productsPerPage = 5;
+  const allProducts = Array.isArray(records) ? records : [];
+  const filteredProducts = filterByCategory(allProducts, selectedCategory);
+  const finalProducts = searchProducts(filteredProducts, searchQuery);
+  const totalPages = Math.ceil(finalProducts.length / productsPerPage);
+  const currentProducts = finalProducts.slice(
+    (currentPage - 1) * productsPerPage,
+    currentPage * productsPerPage
+  );
 
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const handleModalOpen = () => setIsModalOpen(true);
   const handleModalClose = () => setIsModalOpen(false);
+  const handleViewModalOpen = () => setIsViewModalOpen(true);
+  const handleViewModalClose = () => setIsViewModalOpen(false);
 
   const handleAddProduct = (formData: any) => {
     addProductMutation.mutate(formData, {
@@ -44,30 +55,35 @@ const ProductsTable = () => {
         handleModalClose();
       },
       onError: error => {
-        console.error(error);
+        console.log(error);
       },
     });
   };
 
-  const handleViewModalOpen = () => setIsViewModalOpen(true);
-  const handleViewModalClose = () => setIsViewModalOpen(false);
+  const handleView = (productId: string): void => {
+    if (!records) {
+      console.log('Records is undefined');
+      return;
+    }
 
-const handleView = (productId: string): void => {
-  if (!records) {
-    console.error('Records is undefined');
-    return;
-  }
-
-  const product = records.find((prod: any) => prod.id === productId);
-  if (product) {
-    setSelectedProduct(product);
-    handleViewModalOpen();
-  }
-};
+    const product = records.find((prod: any) => prod.id === productId);
+    if (product) {
+      setIsModalOpen(false);
+      setIsEditModalOpen(false);
+      setSelectedProduct(product);
+      setIsViewModalOpen(true);
+      setShowMenu(null);
+    }
+  };
 
   const handleDelete = (id: string): void => {
     setSelectedProductId(id);
     setIsDeleteModalOpen(true);
+  };
+
+  const handleCancelDelete = () => {
+    setIsDeleteModalOpen(false);
+    setSelectedProductId(null);
   };
 
   const handleConfirmDelete = () => {
@@ -83,11 +99,30 @@ const handleView = (productId: string): void => {
     });
   };
 
-  const handleCancelDelete = () => {
-    setIsDeleteModalOpen(false);
-    setSelectedProductId(null);
+  const handleEdit = (productId: string): void => {
+    if (!records) return;
+
+    const product = records.find((prod: any) => prod.id === productId);
+    if (product) {
+      setIsModalOpen(false);
+      setIsViewModalOpen(false);
+
+      setSelectedProduct(product);
+      setIsEditModalOpen(true);
+    }
   };
-  
+
+  const handleEditModalOpen = (product: ProductRecord) => {
+    setSelectedProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const handleEditModalClose = () => {
+    setIsEditModalOpen(false);
+    setSelectedProduct(null);
+    setShowMenu(null);
+  };
+
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen pr-64">
@@ -101,17 +136,6 @@ const handleView = (productId: string): void => {
       <div className="text-center text-red-500">خطا در بارگذاری محصولات.</div>
     );
   }
-
-  const allProducts = Array.isArray(records) ? records : [];
-
-  const filteredProducts = filterByCategory(allProducts, selectedCategory);
-  const finalProducts = searchProducts(filteredProducts, searchQuery);
-
-  const totalPages = Math.ceil(finalProducts.length / productsPerPage);
-  const currentProducts = finalProducts.slice(
-    (currentPage - 1) * productsPerPage,
-    currentPage * productsPerPage
-  );
 
   function toggleMenu(id: any): void {
     setShowMenu(showMenu === id ? null : id);
@@ -264,12 +288,19 @@ const handleView = (productId: string): void => {
           onCancel={handleCancelDelete}
         />
       )}
-
       {isViewModalOpen && selectedProduct && (
         <ProductModal
           isOpen={isViewModalOpen}
           onClose={handleViewModalClose}
-          product={selectedProduct}
+          product={selectedProduct as any}
+        />
+      )}
+
+      {isEditModalOpen && selectedProduct && (
+        <EditProductModal
+          onClose={handleEditModalClose}
+          onSubmit={handleEdit}
+          defaultValues={selectedProduct}
         />
       )}
     </div>

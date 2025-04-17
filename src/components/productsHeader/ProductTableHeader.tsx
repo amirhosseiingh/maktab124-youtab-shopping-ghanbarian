@@ -25,14 +25,14 @@ const ProductTableHeader = ({
       <div className="flex items-center gap-2">
         <button
           onClick={onOpenModal}
-          className="bg-green-600 text-white px-4 py-2 rounded-sm hover:bg-green-700 transition"
+          className="bg-[var(--primary)] text-white px-4 py-2 rounded-sm hover:bg-[var(--secondary)] transition"
         >
           افزودن محصول
         </button>
         {isModalOpen && renderModal()}
 
         <select
-          className="border border-green-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+          className="border border-[var(--primary)] rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
           value={selectedCategory}
           onChange={e => onChangeCategory(e.target.value)}
         >
@@ -45,7 +45,7 @@ const ProductTableHeader = ({
       <input
         type="text"
         placeholder="جستجو محصول..."
-        className="border border-green-300 rounded-xl px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-green-400"
+        className="border border-[var(--primary)] rounded-xl px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
         value={searchQuery}
         onChange={e => onChangeSearch(e.target.value)}
       />

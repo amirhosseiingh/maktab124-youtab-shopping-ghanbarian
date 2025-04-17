@@ -1,10 +1,10 @@
 import React from 'react';
-
+import poster from '@/assets/images/poster-homaPage.jpg'
 const HomePage = () => {
     return (
-        <div>
-            home page
-        </div>
+      <div>
+        <img src={poster.src} alt="" />
+      </div>
     );
 }
 
