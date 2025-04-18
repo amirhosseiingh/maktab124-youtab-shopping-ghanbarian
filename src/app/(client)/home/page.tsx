@@ -1,9 +1,9 @@
 import React from 'react';
-import poster from '@/assets/images/poster-homaPage.jpg'
+import MainPage from '@/components/pages/main';
 const HomePage = () => {
     return (
-      <div>
-        <img src={poster.src} alt="" />
+      <div className='h-full'>
+        <MainPage/>
       </div>
     );
 }

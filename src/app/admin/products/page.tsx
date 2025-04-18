@@ -8,7 +8,7 @@ import { filterByCategory } from '@/utils/productFilter';
 import { searchProducts } from '@/utils/productSearch';
 import { MoreVertical, Eye, Pencil, Trash } from 'lucide-react';
 import { useProductsQuery } from '@/hooks/getProducts';
-import toast, { Toaster } from 'react-hot-toast';
+import  { Toaster } from 'react-hot-toast';
 import NoResult from '@/components/noResult/noResult';
 import { BASE_URL } from '@/configs/envReader';
 import DeleteConfirmModal from '@/components/modals/deleteModal';
