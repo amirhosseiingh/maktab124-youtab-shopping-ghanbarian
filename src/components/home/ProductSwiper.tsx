@@ -37,8 +37,8 @@ const slides = [
 
 export default function ProductSlider() {
   return (
-    <section className="bg-[#f9fafb] py-12 px-4">
-      <h2 className="text-3xl font-bold text-center text-[#1f2937] mb-10">
+    <section className="bg-[var(--color-background)] py-12 px-4">
+      <h2 className="text-3xl font-bold text-center text-[var(--color-foreground)] mb-10">
         محصولات ما
       </h2>
       <Swiper
@@ -66,12 +66,14 @@ export default function ProductSlider() {
               />
               <div className="p-4 flex flex-col justify-between flex-grow">
                 <div>
-                  <h3 className="text-xl font-semibold text-[#4f46e5] mb-1">
+                  <h3 className="text-xl font-semibold text-[var(--color-primary)] mb-1">
                     {slide.title}
                   </h3>
-                  <p className="text-[#374151] text-sm">{slide.desc}</p>
+                  <p className="text-[var(--color-text)] text-sm">
+                    {slide.desc}
+                  </p>
                 </div>
-                <button className="mt-4 text-sm text-white bg-[#6366f1] px-4 py-2 rounded-xl hover:bg-[#4f46e5] transition self-start">
+                <button className="mt-4 text-sm text-white bg-[var(--color-primary)] px-4 py-2 rounded-xl hover:bg-[var(--color-secondary)] transition self-start">
                   مشاهده جزئیات
                 </button>
               </div>

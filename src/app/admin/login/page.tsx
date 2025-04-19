@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import userLogo from '../../../assets/images/youtab logo.png';
 import { useLoginRequest } from '@/hooks/auth';
 import iconLogInPage from '../../../assets/images/icons8-group-100.png'
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 const LoginPage = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -34,7 +35,6 @@ const LoginPage = () => {
             alt="user logo"
             className="w-16 h-16 mb-4"
           />
-          {/* Email */}
           <div className="relative mb-4">
             <input
               type="email"
@@ -44,11 +44,10 @@ const LoginPage = () => {
               className="w-72 p-2 bg-green-50 rounded-md text-green-700 placeholder-green-800"
             />
           </div>
-          {/* Password */}
           <div className="relative mb-6">
             <input
               type={show ? 'text' : 'password'}
-              placeholder="رمز بور"
+              placeholder="رمز عبور"
               value={values.password}
               onChange={e => setValues({ ...values, password: e.target.value })}
               className="w-72 p-2 bg-green-50 rounded-md text-green-800 placeholder-green-800 "
@@ -56,12 +55,11 @@ const LoginPage = () => {
             <button
               type="button"
               onClick={handleClick}
-              className="absolute left-2 top-1.5 text-white text-sm bg-green-800 p-1 rounded-sm hover:bg-green-600 "
+              className="absolute left-2 top-1.5 text-white bg-green-800 p-1 rounded-sm hover:bg-green-600"
             >
-              {show ? 'Hide' : 'Show'}
+              {show ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
             </button>
           </div>
-          {/* Submit Button */}
           <button
             onClick={() => mutate(values)}
             className="w-86 bg-green-800 text-white py-2 rounded-md mt-2 hover:bg-green-600"
