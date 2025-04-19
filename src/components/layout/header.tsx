@@ -147,7 +147,7 @@ export default function Header() {
           </Popover>
 
           <a
-            href="#"
+            href="/products"
             className="text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm"
           >
             محصولات
