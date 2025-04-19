@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import {
   Dialog,
   DialogPanel,
@@ -70,15 +71,18 @@ export default function Header() {
         className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">youtab shopping</span>
-            <img
-              alt="youtab shopping"
-              src={youtabLogo.src}
-              className="h-14 w-36 rounded-lg"
-            />
-          </a>
+          <Link href="/" legacyBehavior>
+            <div className="-m-1.5 p-1.5">
+              <span className="sr-only">youtab shopping</span>
+              <img
+                alt="youtab shopping"
+                src={youtabLogo.src}
+                className="h-14 w-36 rounded-lg"
+              />
+            </div>
+          </Link>
         </div>
+
         <div className="flex lg:hidden">
           <button
             type="button"

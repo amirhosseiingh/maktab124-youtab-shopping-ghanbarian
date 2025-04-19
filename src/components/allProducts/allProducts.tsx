@@ -2,12 +2,17 @@
 import { BASE_URL } from '@/configs/envReader';
 import { useProductsQuery } from '@/hooks/getProducts';
 import { FaStar } from 'react-icons/fa';
+import LoaderLoading from '../common/loadding';
 
 const AllProductsList = () => {
   const { data, isLoading, error } = useProductsQuery();
 
   if (isLoading)
-    return <div className="text-center p-10">در حال بارگذاری...</div>;
+    return (
+      <div className="flex justify-center items-center mt-20">
+        <LoaderLoading />
+      </div>
+    );
 
   if (error)
     return (
