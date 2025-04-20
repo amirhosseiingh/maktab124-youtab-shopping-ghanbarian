@@ -2,40 +2,45 @@
 import { useState, useEffect } from 'react';
 import { Product } from '@/types/order';
 
-type SidebarFilterProps = {
+type ProductFilterSidebarProps = {
   products: Product[];
   onFilterChange: (filters: {
     search: string;
     brand: string;
+    category: string;
     minPrice: number;
     maxPrice: number;
   }) => void;
 };
 
-export default function SidebarFilter({
+export default function ProductFilterSidebar({
   products,
   onFilterChange,
-}: SidebarFilterProps) {
+}: ProductFilterSidebarProps) {
   const [search, setSearch] = useState('');
   const [brand, setBrand] = useState('');
+  const [category, setCategory] = useState('');
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 0 });
   const [uniqueBrands, setUniqueBrands] = useState<string[]>([]);
+  const [uniqueCategories, setUniqueCategories] = useState<string[]>([]);
 
   useEffect(() => {
     const prices = products.map(p => Number(p.price));
     const brands = Array.from(new Set(products.map(p => p.brand)));
+    const categories = Array.from(new Set(products.map(p => p.category)));
 
     setPriceRange({ min: Math.min(...prices), max: Math.max(...prices) });
     setMinPrice(Math.min(...prices));
     setMaxPrice(Math.max(...prices));
     setUniqueBrands(brands);
+    setUniqueCategories(categories);
   }, [products]);
 
   useEffect(() => {
-    onFilterChange({ search, brand, minPrice, maxPrice });
-  }, [search, brand, minPrice, maxPrice]);
+    onFilterChange({ search, brand, category, minPrice, maxPrice });
+  }, [search, brand, category, minPrice, maxPrice]);
 
   return (
     <div className="bg-[var(--background)] rounded-xl shadow-lg p-4 space-y-5 w-full lg:w-64 border border-gray-100 sticky top-5 h-fit">
@@ -64,6 +69,23 @@ export default function SidebarFilter({
           {uniqueBrands.map(b => (
             <option key={b} value={b}>
               {b}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <h3 className="font-semibold text-base mb-2 text-[var(--text)]">
+          دسته‌بندی
+        </h3>
+        <select
+          value={category}
+          onChange={e => setCategory(e.target.value)}
+          className="w-full px-3 py-2 border border-[var(--primary)] rounded-lg bg-white text-sm text-[var(--text)] focus:ring-2 focus:ring-[var(--primary)] focus:outline-none"
+        >
+          <option value="">همه دسته‌ها</option>
+          {uniqueCategories.map(c => (
+            <option key={c} value={c}>
+              {c}
             </option>
           ))}
         </select>
