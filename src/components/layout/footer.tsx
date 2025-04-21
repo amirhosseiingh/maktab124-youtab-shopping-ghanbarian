@@ -1,14 +1,13 @@
 import React from 'react';
-import logo from '@/assets/images/youtab logo.png'
+import logo from '@/assets/images/download.png'
 const Footer = () => {
   return (
     <footer className="bg-[#f9fafb] mt-4">
       <div className="mx-auto max-w-screen-xl p-8">
         <div className="sm:flex sm:items-center sm:justify-between mb-3">
           <div>
-            <img className="w-44 h-16 rounded-lg" src={logo.src} alt="" />
+            <img className="w-44 h-20 rounded-lg" src={logo.src} alt="" />
           </div>
-          {/* icons */}
           <ul className="mt-2 flex justify-start gap-6 sm:mt-0 sm:justify-end">
             <li>
               <a

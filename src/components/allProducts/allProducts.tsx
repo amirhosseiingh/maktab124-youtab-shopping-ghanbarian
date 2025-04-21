@@ -79,11 +79,17 @@ const AllProductsList = () => {
                   <p className="text-xs text-gray-500 mt-1">
                     برند: {product.brand}
                   </p>
-                  {product.stock < 3 && (
-                    <p className="text-xs text-red-700 font-medium animate-pulse">
+                  {Number(product.stock) === 0 ? (
+                    <p className="text-xs text-white bg-red-600 rounded-full px-3 py-1 mt-2 w-fit shadow-sm">
+                      ناموجود
+                    </p>
+                  ) : Number(product.stock) > 0 &&
+                    Number(product.stock) <= 5 ? (
+                    <p className="text-xs text-red-700 font-semibold animate-pulse mt-2">
                       فقط {product.stock} عدد باقی مانده
                     </p>
-                  )}
+                  ) : null}
+
                   <div className="mt-auto flex items-center justify-between">
                     <span className="text-[var(--primary)] font-bold text-sm">
                       {(+product.price).toLocaleString()} تومان

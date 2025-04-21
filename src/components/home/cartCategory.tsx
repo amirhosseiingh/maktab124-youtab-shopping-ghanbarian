@@ -5,21 +5,21 @@ const categories = [
   {
     title: 'محصولات آرایشی',
     image:
-      'https://images.pexels.com/photos/3373743/pexels-photo-3373743.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/7810570/pexels-photo-7810570.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'رژ، پنکیک، کرم‌پودر و همه چی برای زیبایی بیشتر.',
     value: 'آرایشی',
   },
   {
     title: 'محصولات بهداشتی',
     image:
-      'https://images.pexels.com/photos/6621467/pexels-photo-6621467.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/8490226/pexels-photo-8490226.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'از مراقبت پوست تا پاک‌کننده‌ها، همه چی برای سلامتی پوستت.',
     value: 'بهداشتی',
   },
   {
     title: 'مراقبت مو',
     image:
-      'https://images.pexels.com/photos/8534272/pexels-photo-8534272.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/7148533/pexels-photo-7148533.jpeg?auto=compress&cs=tinysrgb&w=800',
     description: 'شامپو، ماسک مو، سرم و هر چیزی که موهات عاشقشن.',
     value: 'مو',
   },

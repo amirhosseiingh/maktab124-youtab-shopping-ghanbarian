@@ -98,11 +98,16 @@ export default function ProductsCategoryList() {
                           ? `${product.brand.slice(0, 15)}...`
                           : product.brand}
                       </p>
-                      {product.stock < 3 && (
-                        <p className="text-sm text-red-700 font-medium animate-pulse">
+                      {Number(product.stock) === 0 ? (
+                        <p className="text-xs text-white bg-red-600 rounded-full px-2 py-1  w-fit shadow-sm">
+                          ناموجود
+                        </p>
+                      ) : Number(product.stock) > 0 &&
+                        Number(product.stock) <= 5 ? (
+                        <p className="text-xs text-red-700 font-semibold animate-pulse mt-2">
                           فقط {product.stock} عدد باقی مانده
                         </p>
-                      )}
+                      ) : null}
                     </div>
                     <div className="flex items-center text-sm text-gray-700 gap-1.5">
                       {product.star}

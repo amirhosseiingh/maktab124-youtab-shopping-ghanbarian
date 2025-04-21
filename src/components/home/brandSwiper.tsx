@@ -5,11 +5,15 @@ import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
 import Image from 'next/image';
 
-import logo1 from '@/assets/images/roja-logo.jpg';
-import logo2 from '@/assets/images/roja-logo.jpg';
-import logo3 from '@/assets/images/roja-logo.jpg';
-import logo4 from '@/assets/images/roja-logo.jpg';
-import logo5 from '@/assets/images/roja-logo.jpg';
+import logo1 from '@/assets/images/BrandsPhoto/1697965162_gUMi0S.jpg'
+import logo2 from '@/assets/images/BrandsPhoto/1723273021_Awqods.jpg';
+import logo3 from '@/assets/images/BrandsPhoto/Robison.jpg';
+import logo4 from '@/assets/images/BrandsPhoto/dermolive-hand-nail-cream-logo.jpg';
+import logo5 from '@/assets/images/BrandsPhoto/doctor-jila.jpg';
+import logo6 from '@/assets/images/BrandsPhoto/jute-logo.jpg';
+import logo7 from '@/assets/images/BrandsPhoto/victoria_rose.jpg';
+import logo8 from '@/assets/images/BrandsPhoto/logo-voche.jpg';
+import logo9 from '@/assets/images/BrandsPhoto/she_logo.jpg';
 
 const brands = [
   { name: 'Brand 1', logo: logo1 },
@@ -17,10 +21,10 @@ const brands = [
   { name: 'Brand 3', logo: logo3 },
   { name: 'Brand 4', logo: logo4 },
   { name: 'Brand 5', logo: logo5 },
-  { name: 'Brand 6', logo: logo1 },
-  { name: 'Brand 7', logo: logo2 },
-  { name: 'Brand 8', logo: logo3 },
-  { name: 'Brand 9', logo: logo4 },
+  { name: 'Brand 6', logo: logo6 },
+  { name: 'Brand 7', logo: logo7 },
+  { name: 'Brand 8', logo: logo8 },
+  { name: 'Brand 9', logo: logo9 },
 ];
 
 export default function BrandSwiper() {

@@ -6,7 +6,9 @@ import { BASE_URL } from '@/configs/envReader';
 import { Truck, RefreshCcw, ShieldCheck, Clock4, Heart } from 'lucide-react';
 import StarRating from '@/components/base/StarRating';
 import LoaderLoading from '../common/loadding';
-
+import { AiOutlineProduct } from 'react-icons/ai';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 const shippingFeatures = [
   { icon: <Truck size={18} />, label: 'ارسال سریع' },
   { icon: <RefreshCcw size={18} />, label: 'بازگشت کالا' },
@@ -33,11 +35,14 @@ const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
     <div className="max-w-6xl mx-auto px-4 py-8 bg-[var(--background)] text-[var(--text)]">
       <div className="flex flex-col lg:flex-row gap-10 items-start h-80">
         <div className="w-48 mx-auto">
-          <img
-            src={BASE_URL + product.images[0]}
-            alt={product.name}
-            className="w-full h-auto rounded-xl shadow-md object-contain"
-          />
+          <Zoom>
+            <img
+              src={BASE_URL + product.images[0]}
+              alt={product.name}
+              className="w-full h-auto rounded-xl shadow-md object-contain cursor-zoom-in"
+              style={{ maxHeight: '200px' }}
+            />
+          </Zoom>
         </div>
         <div className="flex-1 space-y-4">
           <h1 className="text-lg font-bold text-[var(--primary)]">
@@ -127,22 +132,30 @@ const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
       </div>
-      <div className="mt-12 border-t pt-4 h-auto">
+      <div className="mt-12 border-b border-[var(--primary)] pt-4 h-auto">
         <button
           onClick={() => setShowDescription(!showDescription)}
-          className={`text-[var(--primary)] font-medium ml-4 
+          className={`relative flex items-center gap-2 text-[var(--primary)] font-bold ml-4 px-4 py-2 
       ${
         showDescription
           ? 'border-b-2 border-[var(--primary)]'
           : 'border-b-2 border-transparent'
       } 
-      transition-all duration-300`}
+      transition-all duration-300 hover:text-[var(--secondary)]`}
         >
+          <AiOutlineProduct />
           توضیحات محصول
+          <span
+            className={`absolute left-0 bottom-[-2px] h-[2px] w-full bg-[var(--secondary)] transition-transform duration-300 
+        ${showDescription ? 'scale-x-100' : 'scale-x-0'}
+      `}
+          ></span>
         </button>
 
         {showDescription && (
-          <p className="mt-2 text-gray-500 ml-4">{product.description}</p>
+          <p className="mt-4 text-gray-600 ml-4 leading-relaxed">
+            {product.description}
+          </p>
         )}
       </div>
     </div>

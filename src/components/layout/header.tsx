@@ -58,7 +58,7 @@ const callsToAction = [
   { name: 'واحد فروش', href: '#', icon: PhoneIcon },
 ];
 
-import youtabLogo from '../../assets/images/youtab logo.png'
+import youtabLogo from '../../assets/images/download.png'
 import { IoCart } from 'react-icons/io5';
 
 export default function Header() {
@@ -77,7 +77,7 @@ export default function Header() {
               <img
                 alt="youtab shopping"
                 src={youtabLogo.src}
-                className="h-14 w-36 rounded-lg"
+                className="h-20 w-36 rounded-lg"
               />
             </div>
           </Link>
