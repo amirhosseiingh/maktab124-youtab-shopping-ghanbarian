@@ -3,25 +3,16 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import {
-  Dialog,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
   Popover,
   PopoverButton,
   PopoverGroup,
   PopoverPanel,
 } from '@headlessui/react';
 import {
-  ArrowPathIcon,
   Bars3Icon,
   ChartPieIcon,
-  CursorArrowRaysIcon,
   FingerPrintIcon,
   ScissorsIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
 } from '@heroicons/react/24/outline';
 import {
   ChevronDownIcon,
@@ -58,7 +49,7 @@ const callsToAction = [
   { name: 'واحد فروش', href: '#', icon: PhoneIcon },
 ];
 
-import youtabLogo from '../../assets/images/download.png'
+import youtabLogo from '../../assets/images/Logo.png'
 import { IoCart } from 'react-icons/io5';
 
 export default function Header() {
@@ -176,7 +167,7 @@ export default function Header() {
           >
             ورود <span aria-hidden="true">&rarr;</span>
           </a>
-          <a href="">
+          <a href="/cart">
             <IoCart />
           </a>
         </div>

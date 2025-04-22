@@ -9,6 +9,16 @@ import LoaderLoading from '../common/loadding';
 import { AiOutlineProduct } from 'react-icons/ai';
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+
+import { useDispatch } from 'react-redux';
+import {
+  addToCart,
+  decreaseQuantity,
+  increaseQuantity,
+} from '@/redux/slices/cartSlice'; // مسیر Slice را تنظیم کنید
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
+
 const shippingFeatures = [
   { icon: <Truck size={18} />, label: 'ارسال سریع' },
   { icon: <RefreshCcw size={18} />, label: 'بازگشت کالا' },
@@ -19,10 +29,19 @@ const shippingFeatures = [
 const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
   const { data: product, isLoading, error } = useProductQuery(id);
-
+  
+  const dispatch = useDispatch();
   const [showMore, setShowMore] = useState(false);
-  const [quantity, setQuantity] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(0);
+
   const [showDescription, setShowDescription] = useState(false);
+
+const cartItem = useSelector((state: RootState) =>
+  product ? state.cart.cart.find(item => item.id === product.id) : undefined
+);
+
+
+  const quantity = cartItem ? cartItem.quantity : 0;
 
   if (isLoading) return <LoaderLoading />;
   if (error || !product) return <p>محصول یافت نشد.</p>;
@@ -101,7 +120,24 @@ const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
               )}
               {quantity === 0 ? (
                 <button
-                  onClick={() => setQuantity(1)}
+                  onClick={() =>
+                    dispatch(
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        images: product.images,
+                        category: '',
+                        stock: 0,
+                        description: '',
+                        details: [],
+                        brand: '',
+                        star: '',
+                        rating: 0,
+                        quantity: 0
+                      })
+                    )
+                  }
                   className="w-full py-3 rounded-xl text-md font-medium bg-[var(--primary)] text-white hover:bg-[var(--secondary)] transition"
                 >
                   افزودن به سبد خرید
@@ -109,15 +145,14 @@ const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
               ) : (
                 <div className="flex items-center justify-between gap-2">
                   <button
-                    onClick={() => setQuantity(quantity - 1)}
-                    disabled={quantity === 0}
+                    onClick={() => dispatch(decreaseQuantity(product.id))}
                     className="px-3 py-1 bg-gray-100 rounded-lg text-lg hover:bg-gray-200 transition"
                   >
                     -
                   </button>
                   <span className="text-md font-semibold">{quantity}</span>
                   <button
-                    onClick={() => setQuantity(quantity + 1)}
+                    onClick={() => dispatch(increaseQuantity(product.id))}
                     className="px-3 py-1 bg-gray-100 rounded-lg text-lg hover:bg-gray-200 transition"
                   >
                     +

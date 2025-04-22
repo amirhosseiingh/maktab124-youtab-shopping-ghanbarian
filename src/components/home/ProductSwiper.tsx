@@ -34,7 +34,7 @@ export default function ProductSlider() {
           1024: { slidesPerView: 3 },
         }}
       >
-        {products?.slice(0, 8).map(product => (
+        {products?.slice(4, 16).map(product => (
           <SwiperSlide key={product.id}>
             <div
               className="bg-white shadow-lg rounded-2xl overflow-hidden border border-gray-200 hover:shadow-2xl transition-transform duration-300 hover:-translate-y-1 h-full flex flex-col"
