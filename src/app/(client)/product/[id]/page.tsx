@@ -1,12 +1,12 @@
-"use client"
-import { useParams } from 'next/navigation'; 
-import ProductPage from '@/components/pages/productPage';
+'use client';
+import { useParams } from 'next/navigation';
+import ProductPage from '@/pages/productPage';
 import React from 'react';
 
 const Page = () => {
-  const params = useParams(); 
+  const params = useParams();
 
-  const { id } = params; 
+  const { id } = params;
 
   if (!id) return <p>محصول شناسایی نشد</p>;
 

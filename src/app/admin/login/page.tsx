@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import userLogo from '../../../assets/images/youtab logo.png';
 import { useLoginRequest } from '@/hooks/auth';
-import iconLogInPage from '../../../assets/images/icons8-group-100.png'
-import { FaEyeSlash, FaEye } from 'react-icons/fa';
+import iconLogInPage from '../../../assets/images/icons8-group-100.png';
+import { FaEyeSlash, FaEye, FaHome } from 'react-icons/fa'; // FaHome برای آیکون خانه
+import LoaderLoading from '@/components/common/loadding';
+import Link from 'next/link'; // برای هدایت به صفحه اصلی سایت
+
 const LoginPage = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -17,16 +20,24 @@ const LoginPage = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-green-100">
-        <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center mt-40">
+        <LoaderLoading />
       </div>
     );
   }
 
   return (
-    <div className="bg-green-100 flex  h-screen">
-      <div className="bg-white  w-full ">
-        <div className="flex flex-col items-center justify-center p-24   m-8">
+    <div className="bg-green-100 flex h-screen">
+      <div className="bg-white w-full">
+        <div className="flex flex-col items-center justify-center p-24 m-8">
+          <div className="absolute top-4 right-4">
+            <Link href="/">
+              <FaHome
+                size={24}
+                className="text-green-700 hover:text-green-500"
+              />
+            </Link>
+          </div>
           <p className="text-green-700 text-2xl mb-2 font-bold">
             صفحه ورود کاربران
           </p>
@@ -68,7 +79,7 @@ const LoginPage = () => {
           </button>
         </div>
       </div>
-      <div className="w-full ">
+      <div className="w-full">
         <img className="h-full" src={userLogo.src} alt="userLogo" />
       </div>
     </div>

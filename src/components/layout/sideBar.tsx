@@ -1,22 +1,29 @@
 'use client';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import {
   HomeIcon,
   CubeIcon,
   UsersIcon,
   ClipboardIcon,
+  XMarkIcon, 
 } from '@heroicons/react/24/outline';
 
 const menuItems = [
   { name: 'داشبورد', href: '/admin/dashboard', icon: HomeIcon },
   { name: 'محصولات', href: '/admin/products', icon: CubeIcon },
+  { name: 'قیمت / موجودی', href: '/admin/pricing-stock', icon: ClipboardIcon }, 
   { name: 'سفارش‌ها', href: '/admin/orders', icon: ClipboardIcon },
   { name: 'کاربران', href: '/admin/users', icon: UsersIcon },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const handleLogout = () => {
+    router.push('/admin'); 
+  };
+
   if (pathname === '/admin') {
     return null;
   }
@@ -45,6 +52,13 @@ export default function Sidebar() {
           );
         })}
       </nav>
+      <button
+        onClick={handleLogout}
+        className="flex items-center mb-4 gap-3 px-4 py-2 rounded-md text-sm font-medium transition-colors text-gray-300 hover:bg-gray-800 hover:text-white mt-auto"
+      >
+        <XMarkIcon className="w-5 h-5" />
+        خروج
+      </button>
     </aside>
   );
 }

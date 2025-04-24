@@ -21,7 +21,7 @@ export default function ProductSlider() {
   return (
     <section className="bg-[var(--color-background)] py-12 px-4">
       <h2 className="text-3xl md:text-4xl font-extrabold text-center text-[var(--color-foreground)] mb-10">
-        محصولات ما
+        محصولات یوتاب
       </h2>
       <Swiper
         pagination={{ clickable: true }}

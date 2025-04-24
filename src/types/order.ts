@@ -13,7 +13,7 @@ export interface Product {
 }
 
 export interface ProductRecord {
-  [key: string]: Product; 
+  [key: string]: Product;
 }
 
 export interface ProductsTableProps {

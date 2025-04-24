@@ -1,28 +1,27 @@
 import { useRouter } from 'next/navigation';
 import React from 'react';
-
+import photo1 from '@/assets/images/pexels-cristian-rojas-7615876.jpg'
+import photo2 from '@/assets/images/pexels-elena-druzhinina-54874780-7817590.jpg'
+import photo3 from '@/assets/images/pexels-n-voitkevich-8467963.jpg'
 const categories = [
   {
     title: 'محصولات آرایشی',
-    image:
-      'https://images.pexels.com/photos/7810570/pexels-photo-7810570.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: photo1.src,
     description: 'رژ، پنکیک، کرم‌پودر و همه چی برای زیبایی بیشتر.',
     value: 'آرایشی',
   },
-  {
-    title: 'محصولات بهداشتی',
-    image:
-      'https://images.pexels.com/photos/8490226/pexels-photo-8490226.jpeg?auto=compress&cs=tinysrgb&w=800',
-    description: 'از مراقبت پوست تا پاک‌کننده‌ها، همه چی برای سلامتی پوستت.',
-    value: 'بهداشتی',
-  },
-  {
+    {
     title: 'مراقبت مو',
-    image:
-      'https://images.pexels.com/photos/7148533/pexels-photo-7148533.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image:photo3.src ,
     description: 'شامپو، ماسک مو، سرم و هر چیزی که موهات عاشقشن.',
     value: 'مو',
   },
+  {
+    title: 'محصولات بهداشتی',
+    image: photo2.src,
+    description: 'از مراقبت پوست تا پاک‌کننده‌ها، همه چی برای سلامتی پوستت.',
+    value: 'بهداشتی',
+  }
 ];
 
 const CategoryCards = () => {
@@ -47,7 +46,7 @@ const CategoryCards = () => {
             <img
               src={cat.image}
               alt={cat.title}
-              className="w-full h-48 object-cover"
+              className="w-full h-48 object-cover "
             />
             <div className="p-5 text-[var(--color-text)]">
               <h3 className="text-xl font-semibold mb-2 text-[var(--color-primary)]">

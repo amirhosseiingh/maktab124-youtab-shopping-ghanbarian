@@ -1,5 +1,5 @@
 import React from 'react';
-import SinglePage from '../singlePge/singlePage';
+import SinglePage from '../components/singlePge/singlePage';
 
 const ProductPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return (

@@ -13,8 +13,9 @@ import NoResult from '@/components/noResult/noResult';
 import { BASE_URL } from '@/configs/envReader';
 import DeleteConfirmModal from '@/components/modals/deleteModal';
 import ProductModal from '@/components/modals/ProductModal';
-import { ProductRecord } from '@/types/order';
+import { Product, ProductRecord } from '@/types/order';
 import EditProductModal from '@/components/modals/editModal';
+import LoaderLoading from '@/components/common/loadding';
 
 const ProductsTable = () => {
   const { data: records, isLoading, isError } = useProductsQuery();
@@ -30,9 +31,8 @@ const ProductsTable = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState<ProductRecord | null>(
-    null
-  );
+const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
   const productsPerPage = 5;
   const allProducts = Array.isArray(records) ? records : [];
   const filteredProducts = filterByCategory(allProducts, selectedCategory);
@@ -112,10 +112,10 @@ const ProductsTable = () => {
     }
   };
 
-  const handleEditModalOpen = (product: ProductRecord) => {
-    setSelectedProduct(product);
-    setIsEditModalOpen(true);
-  };
+  // const handleEditModalOpen = (product: ProductRecord) => {
+  //   setSelectedProduct(product);
+  //   setIsEditModalOpen(true);
+  // };
 
   const handleEditModalClose = () => {
     setIsEditModalOpen(false);
@@ -125,8 +125,8 @@ const ProductsTable = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen pr-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-green-600"></div>
+      <div className='mt-40 pr-64'>
+        <LoaderLoading />
       </div>
     );
   }
@@ -142,7 +142,7 @@ const ProductsTable = () => {
   }
 
   return (
-    <div className="pr-64 min-h-screen bg-green-50 flex flex-col">
+    <div className="pr-64 min-h-screen bg-green-50 flex flex-col ">
       <Toaster />
       <div className="p-6">
         <h2 className="text-2xl font-bold mb-6 text-right">
@@ -164,7 +164,7 @@ const ProductsTable = () => {
             )}
 
             <select
-              className="border border-green-300 rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+              className="border border-green-300 rounded-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
               value={selectedCategory}
               onChange={e => setSelectedCategory(e.target.value)}
             >
@@ -177,7 +177,7 @@ const ProductsTable = () => {
           <input
             type="text"
             placeholder="جستجو محصول..."
-            className="border border-green-300 rounded-xl px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-green-400"
+            className="border border-green-300 rounded-sm px-4 py-2 w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-green-400"
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
           />

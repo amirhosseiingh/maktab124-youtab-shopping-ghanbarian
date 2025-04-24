@@ -1,23 +1,62 @@
 import React from 'react';
-import poster from '@/assets/images/hero-baner.jpg';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
-const Hero = () => {
+import { Pagination, Navigation, Autoplay } from 'swiper/modules';
+
+// Images
+import slide1 from '@/assets/images/pexels-karolina-grabowska-4041392 (1).jpg';
+import slide2 from '@/assets/images/pexels-n-voitkevich-7852674.jpg';
+import slide3 from '@/assets/images/pexels-chidy-31141638.jpg';
+
+const HeroSlider = () => {
+  const slides = [
+    {
+      image: slide1.src,
+      text: 'زیبایی طبیعی، با محصولات اصل و حرفه‌ای فروشگاه یوتاب',
+    },
+    {
+      image: slide3.src,
+      text: 'تنوع بی‌نظیر از محصولات آرایشی و بهداشتی',
+    },
+    {
+      image: slide2.src,
+      text: 'بهترین انتخاب برای زیبایی ماندگار',
+    },
+  ];
+
   return (
-    <section className="w-full h-[90vh] relative overflow-hidden">
-      <img
-        src={poster.src}
-        alt="محصولات آرایشی و بهداشتی"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-110"
-      />
-      <div className="relative z-10 h-full flex items-center justify-center bg-gradient-to-r from-black/70 via-transparent to-black/70">
-        <div className="bg-black/50 px-6 py-4 rounded-lg">
-          <h1 className="text-white text-4xl md:text-5xl font-extrabold text-center max-w-3xl drop-shadow-2xl">
-            زیبایی طبیعی، با محصولات اصل و حرفه‌ای فروشگاه یوتاب
-          </h1>
-        </div>
-      </div>
-    </section>
+    <Swiper
+      pagination={{ clickable: true }}
+      navigation={true}
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false, 
+      }}
+      modules={[Pagination, Navigation, Autoplay]}
+      className="mySwiper"
+    >
+      {slides.map((slide, index) => (
+        <SwiperSlide key={index}>
+          <div className="w-full h-[90vh] relative overflow-hidden">
+            <img
+              src={slide.image}
+              alt={`اسلاید ${index + 1}`}
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-in-out hover:scale-110"
+            />
+            <div className="absolute inset-0 bg-black/40 z-10"></div>{' '}
+            <div className="absolute bottom-10 left-0 right-0 z-20 px-6 text-center">
+              <h1 className="text-white text-3xl md:text-5xl font-semibold leading-tight drop-shadow-2xl">
+                {slide.text}
+              </h1>
+            </div>
+          </div>
+        </SwiperSlide>
+      ))}
+    </Swiper>
   );
 };
 
-export default Hero;
+export default HeroSlider;
