@@ -2,16 +2,17 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import cartReducer from './slices/cartSlice'; 
-
+import shipmentReducer from './slices/shipmentSlice';
 
 const combinedReducers = combineReducers({
-  cart: cartReducer, 
+  cart: cartReducer,
+  shipment: shipmentReducer,
 });
 
 const persistConfig = {
-  key: 'youtab-shop', 
-  storage, 
-  whitelist: ['cart'], 
+  key: 'youtab-shop',
+  storage,
+  whitelist: ['cart', 'shipment'],
 };
 
 const persistedReducers = persistReducer(persistConfig, combinedReducers);
