@@ -29,17 +29,16 @@ const shippingFeatures = [
 const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = use(params);
   const { data: product, isLoading, error } = useProductQuery(id);
-  
+
   const dispatch = useDispatch();
   const [showMore, setShowMore] = useState(false);
   const [productQuantity, setProductQuantity] = useState(0);
 
   const [showDescription, setShowDescription] = useState(false);
 
-const cartItem = useSelector((state: RootState) =>
-  product ? state.cart.cart.find(item => item.id === product.id) : undefined
-);
-
+  const cartItem = useSelector((state: RootState) =>
+    product ? state.cart.cart.find(item => item.id === product.id) : undefined
+  );
 
   const quantity = cartItem ? cartItem.quantity : 0;
 
@@ -134,7 +133,7 @@ const cartItem = useSelector((state: RootState) =>
                         brand: '',
                         star: '',
                         rating: 0,
-                        quantity: 0
+                        quantity: 0,
                       })
                     )
                   }

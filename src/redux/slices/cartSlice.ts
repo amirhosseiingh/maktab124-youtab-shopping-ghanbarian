@@ -18,25 +18,25 @@ const cartSlice = createSlice({
       const existingItem = state.cart.find(item => item.id === product.id);
 
       if (existingItem) {
-        existingItem.quantity += 1; 
+        existingItem.quantity += 1;
       } else {
-        state.cart.push({ ...product, quantity: 1 }); 
+        state.cart.push({ ...product, quantity: 1 });
       }
     },
     increaseQuantity: (state, action: PayloadAction<number>) => {
       const item = state.cart.find(product => product.id === action.payload);
       if (item) {
-        item.quantity += 1; 
+        item.quantity += 1;
       }
     },
     decreaseQuantity: (state, action: PayloadAction<number>) => {
       const item = state.cart.find(product => product.id === action.payload);
       if (item && item.quantity > 1) {
-        item.quantity -= 1; 
+        item.quantity -= 1;
       } else if (item && item.quantity === 1) {
         state.cart = state.cart.filter(
           product => product.id !== action.payload
-        ); 
+        );
       }
     },
     removeFromCart: (state, action: PayloadAction<number>) => {

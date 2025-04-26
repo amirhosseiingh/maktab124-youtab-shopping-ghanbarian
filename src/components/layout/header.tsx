@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useUser } from '../../lib/api/statusClient'; 
 import {
   Popover,
   PopoverButton,
@@ -19,7 +20,8 @@ import {
   PhoneIcon,
   PlayCircleIcon,
 } from '@heroicons/react/20/solid';
-
+import { IoCart } from 'react-icons/io5';
+import youtabLogo from '../../assets/images/Logo.png';
 
 const products = [
   {
@@ -42,18 +44,20 @@ const products = [
   },
 ];
 
-
-
 const callsToAction = [
   { name: 'تخفیف‌های ویژه را از دست ندهید!', href: '#', icon: PlayCircleIcon },
   { name: 'واحد فروش', href: '#', icon: PhoneIcon },
 ];
 
-import youtabLogo from '../../assets/images/Logo.png'
-import { IoCart } from 'react-icons/io5';
-
 export default function Header() {
+  const { data: user, isLoading } = useUser();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    window.location.reload();
+  };
 
   return (
     <header className="bg-white">
@@ -86,7 +90,7 @@ export default function Header() {
         </div>
         <PopoverGroup className="hidden lg:flex lg:gap-x-12">
           <Popover className="relative">
-            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm">
+            <PopoverButton className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900 hover:bg-green-100 p-2 rounded-sm">
               دسته بندی محصولات
               <ChevronDownIcon
                 aria-hidden="true"
@@ -94,10 +98,7 @@ export default function Header() {
               />
             </PopoverButton>
 
-            <PopoverPanel
-              transition
-              className="absolute top-full right-0 z-50 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition data-closed:translate-y-1 data-closed:opacity-0 data-enter:duration-200 data-enter:ease-out data-leave:duration-150 data-leave:ease-in"
-            >
+            <PopoverPanel className="absolute top-full right-0 z-50 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white ring-1 shadow-lg ring-gray-900/5 transition">
               <div className="p-4">
                 {products.map(item => (
                   <div
@@ -143,13 +144,13 @@ export default function Header() {
 
           <a
             href="/products"
-            className="text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm"
+            className="text-sm/6 font-semibold text-gray-900 hover:bg-green-100 p-2 rounded-sm"
           >
             محصولات
           </a>
           <a
             href="#"
-            className="text-sm/6 font-semibold text-gray-900  hover:bg-green-100 p-2 rounded-sm "
+            className="text-sm/6 font-semibold text-gray-900 hover:bg-green-100 p-2 rounded-sm "
           >
             مشاوره رایگان
           </a>
@@ -161,14 +162,40 @@ export default function Header() {
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end items-center gap-4">
-          <a
-            href="http://localhost:3000/client/auth/login"
-            className="text-sm/6 font-semibold text-gray-900"
-          >
-            ورود <span aria-hidden="true">&rarr;</span>
-          </a>
-          <a href="/cart">
-            <IoCart />
+          {user ? (
+            <div className="relative">
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="inline-flex items-center gap-2 rounded-full border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:border-green-500 hover:text-green-600 transition"
+              >
+                سلام, {user.name}
+              </button>
+              {menuOpen && (
+                <div className="absolute top-8 right-0 bg-white border shadow-lg rounded-lg">
+                  <button
+                    onClick={handleLogout}
+                    className="px-4 py-2 text-sm text-red-500"
+                  >
+                    خروج
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              href="/auth"
+              className="inline-flex items-center rounded-full border border-gray-300 px-4 py-1.5 text-sm font-medium text-gray-700 shadow-sm hover:border-green-500 hover:text-green-600 transition"
+            >
+              ورود
+              <span className="ml-1">&rarr;</span>
+            </Link>
+          )}
+
+          <a href="/cart" className="relative group">
+            <IoCart className="text-3xl text-gray-700 group-hover:text-green-600 transition" />
+            <span className="absolute -top-2 -right-2 inline-flex items-center justify-center rounded-full bg-red-500 px-2 py-1 text-xs font-bold text-white">
+              0
+            </span>
           </a>
         </div>
       </nav>

@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-import userLogo from '../../../assets/images/youtab logo.png';
+import userLogo from '../../../assets/images/youtab-logo.png';
 import { useLoginRequest } from '@/hooks/auth';
 import iconLogInPage from '../../../assets/images/icons8-group-100.png';
-import { FaEyeSlash, FaEye, FaHome } from 'react-icons/fa'; // FaHome برای آیکون خانه
+import { FaEyeSlash, FaEye, FaHome } from 'react-icons/fa'; 
 import LoaderLoading from '@/components/common/loadding';
-import Link from 'next/link'; // برای هدایت به صفحه اصلی سایت
+import Link from 'next/link'; 
 
 const LoginPage = () => {
   const [show, setShow] = useState(false);

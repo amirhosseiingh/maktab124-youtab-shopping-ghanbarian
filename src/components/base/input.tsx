@@ -1,67 +1,42 @@
-// components/InputField.tsx
+// components/base/input.tsx
 import React from 'react';
 
-interface InputFieldProps {
-  type: 'text' | 'number' | 'file' | 'select' | 'textarea';
-  name: string;
-  value: string | string[]; 
-  placeholder: string;
-  onChange: (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => void;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  icon?: React.ReactNode;
+  rightIcon?: React.ReactNode;
   error?: string;
-  options?: string[]; 
+  className?: string;
 }
 
-const InputField: React.FC<InputFieldProps> = ({
-  type,
-  name,
-  value,
-  placeholder,
-  onChange,
-  error,
-  options,
-}) => {
-  return (
-    <div className="flex flex-col gap-2">
-      {type === 'select' ? (
-        <select
-          name={name}
-          value={value as string} 
-          onChange={onChange}
-          className="border border-gray-300 rounded-md px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500"
+const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ icon, rightIcon, error, className = '', ...props }, ref) => {
+    return (
+      <div className="space-y-1">
+        <div
+          className={`relative flex items-center border rounded-lg overflow-hidden transition-all ${
+            error
+              ? 'border-red-500'
+              : 'border-gray-300 dark:border-gray-600 focus-within:border-[var(--primary)]'
+          } ${className}`}
         >
-          <option value="">{placeholder}</option>
-          {options?.map((option, idx) => (
-            <option key={idx} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      ) : type === 'textarea' ? (
-        <textarea
-          name={name}
-          value={value as string}
-          onChange={onChange}
-          placeholder={placeholder}
-          className="border border-gray-300 rounded-md px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-        />
-      ) : (
-        <input
-          type={type}
-          name={name}
-          value={value as string} 
-          onChange={onChange}
-          placeholder={placeholder}
-          className="border border-gray-300 rounded-md px-2 py-2 text-sm focus:ring-2 focus:ring-blue-500"
-        />
-      )}
+          {icon && (
+            <div className="px-3 py-2 bg-gray-50 dark:bg-gray-700 border-r border-gray-200 dark:border-gray-600">
+              {icon}
+            </div>
+          )}
+          <input
+            ref={ref}
+            className={`w-full px-4 py-3 bg-transparent outline-none text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500`}
+            {...props}
+          />
+          {rightIcon && <div className="px-3 py-2">{rightIcon}</div>}
+        </div>
+        {error && <p className="text-red-500 text-xs mt-1 px-2">{error}</p>}
+      </div>
+    );
+  }
+);
 
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-    </div>
-  );
-};
+Input.displayName = 'Input';
 
-export default InputField;
+export { Input };
