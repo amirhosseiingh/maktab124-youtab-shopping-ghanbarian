@@ -33,10 +33,23 @@ const currentOrders = finalOrders.slice(
   currentPage * ordersPerPage
 );
 
+const getTotalAmount = (products: { price: string; quantity: number }[]) => {
+  return products.reduce((total, product) => {
+    const productPrice = Number(product.price);
+    if (!isNaN(productPrice)) {
+      total += productPrice * product.quantity;
+    }
+    return total;
+  }, 0);
+};
+
+
 
 const formatPrice = (price: number) => {
   return `${new Intl.NumberFormat('fa-IR').format(price)} تومان`;
 };
+
+
 
 
   if (isLoading)
@@ -90,10 +103,15 @@ const formatPrice = (price: number) => {
                   {order.username}
                 </td>
                 <td className="px-4 py-2 text-center text-gray-700">
-                  {order.totalAmount
-                    ? formatPrice(order.totalAmount)
+                  {getTotalAmount(order.products) + (order.shippingCost || 0) >
+                  0
+                    ? formatPrice(
+                        getTotalAmount(order.products) +
+                          (order.shippingCost || 0)
+                      )
                     : 'نامشخص'}
                 </td>
+
                 <td className="px-4 py-2 text-center text-gray-700">
                   {new Date(order.createdAt).toLocaleDateString('fa-IR')}
                 </td>

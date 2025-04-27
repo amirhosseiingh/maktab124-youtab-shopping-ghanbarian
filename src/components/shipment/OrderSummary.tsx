@@ -4,7 +4,11 @@ import { FaMoneyBillWave } from 'react-icons/fa';
 import { CartItem } from '@/types/cartItem';
 import Link from 'next/link';
 
-interface OrderSummaryProps {}
+
+interface OrderSummaryProps {
+  orderTotal: number;
+  shippingMethod: string;
+}
 
 export const OrderSummary: React.FC<OrderSummaryProps> = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);

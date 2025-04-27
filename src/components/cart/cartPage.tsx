@@ -43,7 +43,7 @@ const CartPage: React.FC = () => {
 
     setTimeout(() => {
       router.push('/shipment');
-    },20000); 
+    },1000); 
   }
 
 };

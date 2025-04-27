@@ -7,9 +7,10 @@ export interface Product {
   images: string[];
   description: string;
   details: string[];
-  brand : string;
-  star : string,
-  rating : number
+  brand: string;
+  star: string;
+  rating: number;
+  quantity: number;
 }
 
 export interface ProductRecord {
@@ -27,6 +28,7 @@ export interface ProductsTableProps {
 
 
 export interface Order {
+  shippingCost: number;
   id: string;
   createdAt: string;
   username: string;

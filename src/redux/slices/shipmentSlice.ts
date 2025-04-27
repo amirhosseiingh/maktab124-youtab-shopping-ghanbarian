@@ -1,7 +1,7 @@
-// src/redux/slices/shipmentSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ShipmentState {
+  [x: string]: any;
   address: string;
   city: string;
   postalCode: string;
@@ -17,7 +17,7 @@ const initialState: ShipmentState = {
   postalCode: '',
   deliveryDate: '',
   deliveryTime: '',
-  shippingMethod: 'standard',
+  shippingMethod: 'standard', 
   finalPrice: 0,
 };
 
@@ -42,6 +42,9 @@ const shipmentSlice = createSlice({
     },
     setShippingMethod: (state, action: PayloadAction<string>) => {
       state.shippingMethod = action.payload;
+      
+      state.finalPrice =
+        state.finalPrice + (action.payload === 'standard' ? 30000 : 50000);
     },
     setFinalPrice: (state, action: PayloadAction<number>) => {
       state.finalPrice = action.payload;
