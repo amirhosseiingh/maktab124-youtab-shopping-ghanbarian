@@ -85,9 +85,9 @@ const SubmitOrderButton = () => {
       <Toaster />
       <button
         onClick={handleSubmitOrder}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        className="w-full py-3 rounded-lg text-lg font-bold bg-[var(--color-primary)] hover:bg-[var(--color-secondary)] text-white transition-colors"
       >
-        ثبت سفارش
+        ثیت سفارش و پرداخت
       </button>
     </>
   );

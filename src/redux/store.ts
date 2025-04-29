@@ -14,7 +14,7 @@ const combinedReducers = combineReducers({
 const persistConfig = {
   key: 'youtab-shop',
   storage,
-  whitelist: ['cart', 'shipment'],
+  whitelist: ['cart', 'shipment', 'user'],
 };
 
 const persistedReducers = persistReducer(persistConfig, combinedReducers);
