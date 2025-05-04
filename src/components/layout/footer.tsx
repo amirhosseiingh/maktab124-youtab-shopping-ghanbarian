@@ -159,24 +159,7 @@ const Footer = () => {
                   بررسی حساب‌ها{' '}
                 </a>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-700 transition hover:opacity-75"
-                >
-                  {' '}
-                  مشاوره منابع انسانی{' '}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-700 transition hover:opacity-75"
-                >
-                  {' '}
-                  بهینه‌سازی سئو{' '}
-                </a>
-              </li>
+              
             </ul>
           </div>
 
@@ -276,15 +259,6 @@ const Footer = () => {
                 >
                   {' '}
                   قوانین بازپرداخت{' '}
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-gray-700 transition hover:opacity-75"
-                >
-                  {' '}
-                  آمار استخدامی{' '}
                 </a>
               </li>
             </ul>

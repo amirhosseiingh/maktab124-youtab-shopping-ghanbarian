@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useProductsQuery } from '@/hooks/getProducts';
 import { useUpdateProduct } from '@/hooks/useUpdateProduct ';
 import Pagination from '@/components/base/pagination';
-import { Product } from '@/types/order';
 import { BASE_URL } from '@/configs/envReader';
 import toast, { Toaster } from 'react-hot-toast';
 import LoaderLoading from '@/components/common/loadding';

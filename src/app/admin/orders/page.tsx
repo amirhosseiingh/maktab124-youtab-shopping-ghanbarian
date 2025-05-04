@@ -9,6 +9,7 @@ import { getStatusColor } from '@/components/ui/getStatusColor';
 import Pagination from '@/components/base/pagination';
 import { filterItemsByKey } from '@/utils/orderFilter';
 import { searchItems } from '@/utils/orderSearch';
+import LoaderLoading from '@/components/common/loadding';
 
 const OrdersTable = () => {
   const { data: orders, isLoading, isError, refetch } = useOrdersQuery();
@@ -54,8 +55,8 @@ const formatPrice = (price: number) => {
 
   if (isLoading)
     return (
-      <div className="flex justify-center items-center min-h-screen bg-green-50 pr-64">
-        <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex justify-center items-center min-h-screen  pr-64">
+        <LoaderLoading/>
       </div>
     );
 

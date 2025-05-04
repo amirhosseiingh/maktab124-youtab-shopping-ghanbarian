@@ -29,7 +29,7 @@ export const useLoginRequest = () => {
         },
       });
       setTimeout(() => {
-        router.push('/admin/products');
+        router.push('/admin/dashboard');
       }, 1000);
     },
     onError: () => {

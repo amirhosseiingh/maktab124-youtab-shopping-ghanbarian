@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { fetchUserData } from '@/redux/slices/userSlice';
 import { AppDispatch } from '@/redux/store';
-import SubmitOrderButton from '@/components/base/buttons/SubmitOrderButton';
 import { useEffect } from 'react';
 import LoaderLoading from '@/components/common/loadding';
 import {
@@ -14,6 +13,7 @@ import {
   CreditCard,
   User,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const Checkout = () => {
   const cartItems = useSelector((state: RootState) => state.cart.cart);
@@ -21,8 +21,10 @@ const Checkout = () => {
   const user = useSelector((state: RootState) => state.user.user);
   const loading = useSelector((state: RootState) => state.user.loading);
   const error = useSelector((state: RootState) => state.user.error);
+  const paymentStatus = useSelector((state: RootState) => state.payment.status);
 
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
 
   const orderTotal = cartItems.reduce(
     (acc: number, item) => acc + parseFloat(item.price) * item.quantity,
@@ -35,14 +37,31 @@ const Checkout = () => {
     dispatch(fetchUserData());
   }, [dispatch]);
 
-  if (loading) {
-    return <LoaderLoading />;
-  }
+  if (loading) return <LoaderLoading />;
 
   if (error) {
     return (
       <div className="bg-red-100 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-300 p-4 rounded-lg max-w-2xl mx-auto mt-8">
         خطا در دریافت اطلاعات کاربر: {error}
+      </div>
+    );
+  }
+
+  if (paymentStatus === 'paid') {
+    return (
+      <div className="max-w-sm mx-auto p-6 text-center bg-white rounded-xl shadow-md mt-12 border border-gray-100">
+        <div className="mx-auto w-16 h-16 rounded-full border-2 border-green-100 flex items-center justify-center mb-4 bg-green-50">
+          <CheckCircle className="w-8 h-8 text-green-600" />
+        </div>
+        <h3 className="text-xl font-medium text-gray-800 mb-2">
+          پرداخت موفقیت‌آمیز بود!
+        </h3>
+        <p className="text-gray-600 mb-5">
+          سفارش شما ثبت شد و به زودی آماده می‌شود.
+        </p>
+        <button className="px-5 py-2 text-sm bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors">
+          مشاهده سفارش
+        </button>
       </div>
     );
   }
@@ -53,17 +72,13 @@ const Checkout = () => {
         <CheckCircle className="w-8 h-8 text-[var(--color-primary)]" />
         <h1 className="text-2xl md:text-3xl font-bold">بررسی نهایی سفارش</h1>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* بخش سمت چپ - اطلاعات سفارش */}
         <div className="space-y-6">
-          {/* بخش محصولات */}
           <div className="bg-[var(--color-background)] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-5">
             <div className="flex items-center gap-2 mb-4 text-[var(--color-text)]">
               <Package className="w-5 h-5" />
               <h2 className="text-xl font-semibold">محصولات سفارش</h2>
             </div>
-
             <div className="space-y-3">
               {cartItems.map(item => (
                 <div
@@ -87,13 +102,12 @@ const Checkout = () => {
             </div>
           </div>
 
-          {/* بخش اطلاعات ارسال */}
+          {/* اطلاعات ارسال */}
           <div className="bg-[var(--color-background)] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-5">
             <div className="flex items-center gap-2 mb-4 text-[var(--color-text)]">
               <Truck className="w-5 h-5" />
               <h2 className="text-xl font-semibold">اطلاعات ارسال</h2>
             </div>
-
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <User className="w-5 h-5 text-gray-500 dark:text-gray-400 mt-0.5 flex-shrink-0" />
@@ -121,8 +135,7 @@ const Checkout = () => {
                     روش ارسال: {shipment.shippingMethod}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    زمان تحویل: {shipment.deliveryDate} -{' '}
-                    {shipment.deliveryTime}
+                    زمان تحویل: {shipment.deliveryTime}
                   </p>
                 </div>
               </div>
@@ -130,13 +143,11 @@ const Checkout = () => {
           </div>
         </div>
 
-        {/* بخش سمت راست - خلاصه پرداخت */}
         <div className="bg-[var(--color-background)] rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 p-5 h-fit sticky top-6">
           <div className="flex items-center gap-2 mb-4 text-[var(--color-text)]">
             <CreditCard className="w-5 h-5" />
             <h2 className="text-xl font-semibold">خلاصه پرداخت</h2>
           </div>
-
           <div className="space-y-4">
             <div className="flex justify-between items-center">
               <span className="text-gray-600 dark:text-gray-400">
@@ -165,12 +176,12 @@ const Checkout = () => {
               </div>
             </div>
 
-            <div className="pt-4">
-              <SubmitOrderButton />
-              <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-                با کلیک بر روی دکمه پرداخت، قوانین و شرایط را می‌پذیرید
-              </p>
-            </div>
+            <button
+              onClick={() => router.push('/payment')}
+              className="w-full py-3 rounded-lg text-lg font-bold bg-[var(--color-primary)] hover:bg-[var(--color-secondary)] text-white transition-colors"
+            >
+              رفتن به صفحه پرداخت
+            </button>
           </div>
         </div>
       </div>

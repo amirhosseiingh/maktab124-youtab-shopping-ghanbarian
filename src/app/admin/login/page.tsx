@@ -39,7 +39,7 @@ const LoginPage = () => {
             </Link>
           </div>
           <p className="text-green-700 text-2xl mb-2 font-bold">
-            صفحه ورود کاربران
+            صفحه ورود ادمین
           </p>
           <img
             src={iconLogInPage.src}

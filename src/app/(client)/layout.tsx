@@ -17,7 +17,9 @@ export default function RootLayout({
         <Providers>
           {pathname !== '/auth' && <Header />}
           {children}
-          {pathname !== '/auth' && <Footer />}
+          {pathname !== '/auth' &&
+            pathname !== '/payment' &&
+            pathname !== '/orderSucces' && <Footer />}
         </Providers>
       </body>
     </html>

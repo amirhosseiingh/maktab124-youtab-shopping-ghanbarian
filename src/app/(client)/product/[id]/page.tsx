@@ -6,7 +6,7 @@ import React from 'react';
 const Page = () => {
   const params = useParams();
 
-  const { id } = params;
+  const { id } = params as { id: string };
 
   if (!id) return <p>محصول شناسایی نشد</p>;
 

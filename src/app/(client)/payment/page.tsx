@@ -1,10 +1,10 @@
-import Auth from '@/pages/authPage';
+import PaymantPage from '@/pages/paymantPage';
 import React from 'react';
 
 const Page = () => {
   return (
     <>
-     <Auth/> 
+     <PaymantPage/> 
     </>
   );
 }

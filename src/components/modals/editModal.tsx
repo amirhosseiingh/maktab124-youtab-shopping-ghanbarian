@@ -88,7 +88,6 @@ const EditProductModal = ({
       { id: formData.id, ...formData }, 
       {
         onSuccess: () => {
-          console.log('Product successfully edited!');
           onSubmit(formData); 
           onClose(); 
         },

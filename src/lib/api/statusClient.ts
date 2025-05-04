@@ -19,6 +19,6 @@ const fetchUser = async () => {
 export function useUser() {
   return useQuery(['user'], fetchUser, {
     staleTime: Infinity, 
-    cacheTime: Infinity, // نگهداری داده در حافظه
+    cacheTime: Infinity,
   });
 }

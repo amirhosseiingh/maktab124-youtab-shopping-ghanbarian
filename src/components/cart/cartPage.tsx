@@ -13,6 +13,7 @@ import { useRouter } from 'next/navigation';
 import Stepper from '@/components/common/stepper';
 import { ArrowLeft, CreditCard, ShoppingCart, Trash2, Wallet } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import { EmptyCart } from '../emptyCart/emptyCart';
 
 const CartPage: React.FC = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);
@@ -32,7 +33,7 @@ const CartPage: React.FC = () => {
   const applyDiscount = () => {
     if (discountCode === 'DISCOUNT10') {
       setDiscountApplied(true);
-      setDiscountAmount(0.1); // 10% discount
+      setDiscountAmount(0.1);
       toast.success('تخفیف اعمال شد!', {
         duration: 3000,
         position: 'top-left',
@@ -81,9 +82,9 @@ const CartPage: React.FC = () => {
 
   if (cart.length === 0) {
     return (
-      <p className="text-center mt-8 text-var(--color-text)">
-        سبد خرید شما خالی است.
-      </p>
+      <div>
+        <EmptyCart/>
+      </div>
     );
   }
 

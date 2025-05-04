@@ -1,10 +1,10 @@
-import Auth from '@/pages/authPage';
+import SucessOrder from '@/pages/sucessOrder';
 import React from 'react';
 
 const Page = () => {
   return (
     <>
-     <Auth/> 
+     <SucessOrder/> 
     </>
   );
 }

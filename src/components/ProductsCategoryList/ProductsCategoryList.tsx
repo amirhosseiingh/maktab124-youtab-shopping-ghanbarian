@@ -12,7 +12,7 @@ import Link from 'next/link';
 
 export default function ProductsCategoryList() {
   const searchParams = useSearchParams();
-  const category = searchParams.get('category');
+  const category = searchParams?.get('category');
 
   const { data, isLoading, error } = useProducts(category);
 

@@ -4,17 +4,18 @@ import storage from 'redux-persist/lib/storage';
 import cartReducer from './slices/cartSlice';
 import shipmentReducer from './slices/shipmentSlice';
 import userReducer from './slices/userSlice'; 
-
+import paymentReducer from './slices/paymentSlice';
 const combinedReducers = combineReducers({
   cart: cartReducer,
   shipment: shipmentReducer,
-  user: userReducer, 
+  user: userReducer,
+  payment: paymentReducer,
 });
 
 const persistConfig = {
   key: 'youtab-shop',
   storage,
-  whitelist: ['cart', 'shipment', 'user'],
+  whitelist: ['cart', 'shipment', 'user' ],
 };
 
 const persistedReducers = persistReducer(persistConfig, combinedReducers);
