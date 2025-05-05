@@ -12,10 +12,8 @@ import Link from 'next/link';
 
 export default function ProductsCategoryList() {
   const searchParams = useSearchParams();
-  const category = searchParams?.get('category');
-
+  const category = searchParams?.get('category') ?? null;
   const { data, isLoading, error } = useProducts(category);
-
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   useEffect(() => {
