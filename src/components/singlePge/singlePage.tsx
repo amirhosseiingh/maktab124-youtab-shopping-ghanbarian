@@ -175,7 +175,7 @@ const SinglePage = ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
       </div>
-      <div className="mt-12 border-b border-[var(--primary)] pt-4 h-auto">
+      <div className=" border-b border-[var(--primary)] pt-4 h-auto">
         <button
           onClick={() => setShowDescription(!showDescription)}
           className={`relative flex items-center gap-2 text-[var(--primary)] font-bold ml-4 px-4 py-2 

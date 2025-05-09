@@ -156,7 +156,6 @@ const CartPage: React.FC = () => {
 
           <div className="flex flex-col gap-6 flex-grow">
             <div className="space-y-6 text-base flex-grow">
-              {/* بخش جمع کل */}
               <div className="flex justify-between items-center pb-4 border-b border-gray-100">
                 <div className="flex items-center gap-2 text-gray-600">
                   <ShoppingCart className="w-5 h-5 text-gray-500" />
@@ -167,7 +166,6 @@ const CartPage: React.FC = () => {
                 </span>
               </div>
 
-              {/* بخش کد تخفیف */}
               <div className="relative">
                 <input
                   type="text"
@@ -185,7 +183,6 @@ const CartPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* بخش قابل پرداخت */}
               <div className="mt-auto pt-4 border-t border-gray-100">
                 <div className="flex justify-between items-center font-semibold">
                   <div className="flex items-center gap-2 text-[var(--color-primary)]">
@@ -199,7 +196,6 @@ const CartPage: React.FC = () => {
               </div>
             </div>
 
-            {/* دکمه ادامه سفارش */}
             <button
               onClick={handleProceedToCheckout}
               className="w-full bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark)] text-white font-bold py-3 rounded-lg transition duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
